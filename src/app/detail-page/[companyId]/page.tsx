@@ -9,7 +9,6 @@ import {
   detailArrayWhenNoReview,
   detailArrayWhenReview,
 } from '@constant/constant';
-import useIntersectionObserver from '@hooks/useIntersectionObserver';
 import useTab from '@store/tabNumberStore';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';

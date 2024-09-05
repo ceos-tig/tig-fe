@@ -1,4 +1,4 @@
-import HistoryComponentUpperSection from '@components/reservation-list/all/HistoryComponentUpperSection';
+import HistoryComponentUpperSection from '@components/all/HistoryComponentUpperSection';
 import ReviewLowerSection from './ReviewLowerSection';
 import { ReviewProps } from 'types/reservation-list/review/ReservationListReviewPageTypes';
 

@@ -1,4 +1,4 @@
-import HistoryComponentUpperSection from './all/HistoryComponentUpperSection';
+import HistoryComponentUpperSection from '../all/HistoryComponentUpperSection';
 import { HistoryEndItemProps } from 'types/reservation-list/ReservationListPageTypes';
 import FullButton from '@components/all/FullButton';
 import Link from 'next/link';

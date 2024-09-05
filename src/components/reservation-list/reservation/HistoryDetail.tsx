@@ -1,4 +1,3 @@
-import HistoryComponentUpperSection from '@components/reservation-list/all/HistoryComponentUpperSection';
 import ReservationInfoSection from './ReservationInfoSection';
 import PaymentInfoSection from './PaymentInfoSection';
 import PriceInfoSection from './PriceInfoSection';
@@ -8,6 +7,7 @@ import { ReservationDetailProps } from 'types/reservation-list/reservation/Reser
 import RequestMessageSection from './RequestMessageSection';
 import { useRouter } from 'next/navigation';
 import { formatDate } from 'date-fns';
+import HistoryComponentUpperSection from '@components/all/HistoryComponentUpperSection';
 
 export default function HistoryDetail({
   clubName,
