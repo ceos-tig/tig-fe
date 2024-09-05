@@ -1,5 +1,5 @@
 import FullButton from '@components/all/FullButton';
-import HistoryComponentUpperSection from './all/HistoryComponentUpperSection';
+import HistoryComponentUpperSection from '../all/HistoryComponentUpperSection';
 import { HistoryInProgressItemProps } from 'types/reservation-list/ReservationListPageTypes';
 import useModal from '@store/modalStore';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ export default function HistoryInProgressItem({
   handleChangeCancelReservationId,
 }: HistoryInProgressItemProps) {
   const setModalOpen = useModal((state) => state.setSelectedIsModalOpen);
-  
+
   return (
     <Link
       href={`/reservation-list/reservation/${reservationId}`}

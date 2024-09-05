@@ -5,7 +5,7 @@ import Link from 'next/link';
 import cancelPortOnePayment from '@apis/portone/cancelPayment';
 import { useConfirmReservation } from '@apis/djemalsvpdlwl/confirmReservation';
 import { useDeclineReservation } from '@apis/djemalsvpdlwl/declineReservation';
-import HistoryComponentUpperSection from '@components/reservation-list/all/HistoryComponentUpperSection';
+import HistoryComponentUpperSection from '@components/all/HistoryComponentUpperSection';
 
 export default function HistoryInAdminItem({
   imageUrl,

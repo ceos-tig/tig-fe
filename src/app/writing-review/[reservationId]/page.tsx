@@ -1,6 +1,5 @@
 'use client';
 import Header from '@components/all/Header';
-import HistoryComponentUpperSection from '@components/reservation-list/all/HistoryComponentUpperSection';
 import { HistoryComponentUpperSectionProps } from 'types/reservation-list/ReservationListPageTypes';
 import WritingReviewUnfilledStarSVG from '@public/svg/wrUnfilledStar.svg';
 import WritingReviewFilledStarSVG from '@public/svg/wrFilledStar.svg';
@@ -17,8 +16,9 @@ import TigLoadingPage from '@components/all/TigLoadingPage';
 import { usePostReview } from '@apis/writing-review/postReview';
 import { QueryClient } from '@tanstack/react-query';
 import toast, { Toaster } from 'react-hot-toast';
-import ToastUI, { toastUIDuration } from '@components/mypage/ToastUI';
 import { useQueryClient } from '@tanstack/react-query';
+import ToastUI, { toastUIDuration } from '@components/all/ToastUI';
+import HistoryComponentUpperSection from '@components/all/HistoryComponentUpperSection';
 
 export default function Page({
   params,

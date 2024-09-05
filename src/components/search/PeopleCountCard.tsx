@@ -1,7 +1,7 @@
 'use client';
 import { ChooseCardProps } from 'types/search/SearchTypes';
-import ChooseCard from './ChooseCard';
-import InfoCard from './InfoCard';
+import ChooseCard from '../reservation/ChooseCard';
+import InfoCard from '../all/InfoCard';
 import { useSearchInputInfo } from '@store/searchInfoStore';
 import { useEffect } from 'react';
 
@@ -25,7 +25,7 @@ export default function PeopleCountCard() {
   }, []);
   return (
     <section className="w-full h-[337px] flex flex-col p-5 mt-5">
-      <InfoCard number={3} content="인원을 선택해주세요." />
+      <InfoCard number={4} content="인원을 선택해주세요." />
       {chooseLists.map((chooseList) => (
         <ChooseCard
           key={chooseList.description}
