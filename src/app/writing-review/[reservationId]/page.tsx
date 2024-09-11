@@ -122,16 +122,7 @@ export default function Page({
               <div className="w-full h-fit bg-white p-5 rounded-xl">
                 <HistoryComponentUpperSection
                   className="bg-white"
-                  imageUrls={data.result.imageUrls}
-                  clubAddress={data.result.clubAddress}
-                  clubName={data.result.clubName}
-                  eventDate={data.result.date}
-                  gameCount={data.result.gameCount}
-                  eventEndTime={data.result.endTime}
-                  eventStartTime={data.result.startTime}
-                  adultCount={data.result.adultCount}
-                  teenagerCount={data.result.teenagerCount}
-                  kidsCount={data.result.kidsCount}
+                  {...data.result}
                 />
               </div>
               <div className="w-full h-fit rounded-[10px] bg-white py-5 px-[110px] flex flex-col gap-y-[10px] items-center">
@@ -216,16 +207,7 @@ export default function Page({
             <section className="w-full h-fit p-5 flex flex-col gap-y-5 bg-white">
               <HistoryComponentUpperSection
                 className="bg-white"
-                imageUrls={data.result.imageUrls}
-                clubAddress={data.result.clubAddress}
-                clubName={data.result.clubName}
-                eventDate={data.result.date}
-                gameCount={data.result.gameCount}
-                eventEndTime={data.result.endTime}
-                eventStartTime={data.result.startTime}
-                adultCount={data.result.adultCount}
-                teenagerCount={data.result.teenagerCount}
-                kidsCount={data.result.kidsCount}
+                {...data.result}
               />
               <div className="w-full border-b-[1px] border-grey2" />
               <ReviewLowerSection

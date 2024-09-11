@@ -7,14 +7,14 @@ import Link from 'next/link';
 export default function HistoryInProgressItem({
   clubName,
   clubAddress,
-  eventDate,
-  eventStartTime,
-  eventEndTime,
+  date,
+  startTime,
+  endTime,
   gameCount,
   adultCount,
   teenagerCount,
   kidsCount,
-  reservationStatus,
+  status,
   reservationId,
   paymentId,
   imageUrls,
@@ -31,16 +31,16 @@ export default function HistoryInProgressItem({
       <HistoryComponentUpperSection
         clubName={clubName}
         clubAddress={clubAddress}
-        eventDate={eventDate}
-        eventStartTime={eventStartTime}
-        eventEndTime={eventEndTime}
+        date={date}
+        startTime={startTime}
+        endTime={endTime}
         gameCount={gameCount}
         adultCount={adultCount}
         teenagerCount={teenagerCount}
         kidsCount={kidsCount}
         imageUrls={imageUrls}
       />
-      {reservationStatus === 'TBC' && (
+      {status === 'TBC' && (
         <div className="w-full h-fit flex gap-[10px]">
           <FullButton
             bgColor="white"
@@ -67,7 +67,7 @@ export default function HistoryInProgressItem({
         </div>
       )}
 
-      {reservationStatus === 'CONFIRMED' && (
+      {status === 'CONFIRMED' && (
         <div className="w-full h-fit flex gap-[10px]">
           <FullButton
             bgColor="white"

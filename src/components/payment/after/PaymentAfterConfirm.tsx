@@ -7,34 +7,6 @@ interface paymentAfterConfirmProp {
   reservationId: string;
 }
 
-interface reservationInfoResponseProps {
-  result: {
-    adultCount: number;
-    teenagerCount: number;
-    kidsCount: number;
-    date: string;
-    startTime: string;
-    endTime: string;
-    gameCount: number;
-    price: number;
-    status: 'CONFIRMED' | 'TBC' | 'DECLINED' | 'CANCELED' | 'DONE' | 'REVIEWED';
-    memberId: number;
-    clubId: number;
-    type: 'GAME' | 'TIME';
-    businessHour: string;
-    clubName: string;
-    clubAddress: string;
-    reservationId: number;
-    memberName: string;
-    paymentId: string;
-    reviewId: number;
-    reviewed: boolean;
-    imageUrls: string[];
-  };
-  resultCode: number;
-  resultMsg: string;
-}
-
 export default async function PaymentAfterConfirm({
   reservationId,
 }: paymentAfterConfirmProp) {
@@ -43,7 +15,7 @@ export default async function PaymentAfterConfirm({
     { cache: 'no-store' }
   );
 
-  const data: reservationInfoResponseProps = await response.json();
+  const data = await response.json();
 
   return (
     <section className="w-eightNineWidth flex flex-col items-center gap-y-10 pt-[78px]">
@@ -64,16 +36,7 @@ export default async function PaymentAfterConfirm({
         </div>
       </div>
       <HistoryComponentUpperSection
-        imageUrls={data.result.imageUrls}
-        clubName={data.result.clubName}
-        clubAddress={data.result.clubAddress}
-        eventDate={data.result.date}
-        eventStartTime={data.result.startTime}
-        eventEndTime={data.result.endTime}
-        gameCount={data.result.gameCount}
-        adultCount={data.result.adultCount}
-        teenagerCount={data.result.teenagerCount}
-        kidsCount={data.result.kidsCount}
+        {...data.result}
         className="bg-white p-5"
       />
     </section>

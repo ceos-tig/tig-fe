@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { instance } from '@apis/instance';
 import { clubInfoProps } from 'types/all/ClubInfoTypes';
+import { getSpecificClubInfoPayload } from 'types/payload/payload';
 
 
 
