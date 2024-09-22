@@ -1,7 +1,7 @@
 'use client';
 import Modal from '@components/all/Modal';
 import Tabs from '@components/all/Tabs/Tabs';
-import { homeleisureArray } from '@constant/constant';
+import { categoryMapEngToKor, homeleisureArray } from '@constant/constant';
 import SearchHeader from '@components/all/SearchHeader';
 import HomeBannerSVG from '@public/svg/homeBanner.svg';
 import HomeCardList from '@components/home/HomeCardList';
@@ -9,11 +9,18 @@ import { usePostHome } from '@apis/home/postHome';
 import TigLoadingPage from '@components/all/TigLoadingPage';
 import useGeolocation from '@hooks/home/useGeoLocation';
 import Footer from '@components/all/Footer/Footer';
+import useTab from '@store/tabNumberStore';
+import { useEffect } from 'react';
 
-export default function Home() {
+export default function Home({ params }: { params: { gametype: string } }) {
+  const setCurrentTab = useTab((state) => state.setSelectedTab);
   const homeArray = homeleisureArray;
   const { mutate, isSuccess } = usePostHome();
   const { clubCards, recommendClubCards } = useGeolocation(mutate);
+
+  useEffect(() => {
+    setCurrentTab(categoryMapEngToKor[params.gametype]);
+  });
 
   return (
     <main className="h-full w-full flex flex-col overflow-y-scroll pb-[40px]">
