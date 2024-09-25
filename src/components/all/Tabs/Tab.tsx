@@ -24,7 +24,6 @@ export default function Tab({
   const setCurrentTab = useTab((state) => state.setSelectedTab);
   const currentSubTab = useSubTab((state) => state.selectedTab);
   const setCurrentSubTab = useSubTab((state) => state.setSelectedTab);
-  console.log(currentSubTab);
 
   const HandleClick = () => {
     if (from === 'searchSub') setCurrentSubTab(name);
