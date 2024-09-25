@@ -12,6 +12,7 @@ import { ko } from 'date-fns/locale';
 import { useSearchParams } from 'next/navigation';
 import { useSearchResult } from '@hooks/search/result/useSearchResult';
 import { useEffect, useState } from 'react';
+import UITabs from '@components/all/UITabs/UITabs';
 
 interface userCurrentPingPositionProp {
   latitude: number;
@@ -68,9 +69,8 @@ export default function Page() {
         }`}
         isHomeOrResultPage
       />
-      <Tabs
+      <UITabs
         tabArray={tabArray}
-        rounded
         from="search"
         className="w-full px-5 top-[58px]"
       />

@@ -7,7 +7,7 @@ interface TabsProps {
   from: string;
 }
 
-export default function Tabs({ className, tabArray, from }: TabsProps) {
+export default function UITabs({ className, tabArray, from }: TabsProps) {
   return (
     <section
       className={cn(
@@ -16,11 +16,7 @@ export default function Tabs({ className, tabArray, from }: TabsProps) {
       )}
     >
       {tabArray.map((tab) => (
-        <UITab
-          key={from + tab}
-          name={tab}
-          defaultName={tabArray[0]}
-        />
+        <UITab key={from + tab} name={tab} defaultName={tabArray[0]} />
       ))}
     </section>
   );
