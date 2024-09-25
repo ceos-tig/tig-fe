@@ -21,7 +21,7 @@ export default function NaverMap({
   userCurrentPingPosition,
   isCurrentLocationUIClicked,
 }: NaverMapProps) {
-  locationArray.push(userCurrentPingPosition);
+  // locationArray.push(userCurrentPingPosition);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const mapRef = useRef<naver.maps.Map | undefined>(undefined);
   const setIsBottomSheetOpen = useBottomSheetStore(
@@ -62,11 +62,11 @@ export default function NaverMap({
           icon: {
             url:
               i === locationArray.length - 1
-                ? // ? '/svg/siuu.svg'
-                  '/svg/ping.svg'
+                ? ''
                 : '/svg/ping.svg',
           },
         });
+        
 
         naver.maps.Event.addListener(marker, 'click', () => {
           if (i !== locationArray.length - 1) {
@@ -77,6 +77,17 @@ export default function NaverMap({
 
         return marker;
       });
+
+      new naver.maps.Marker({
+          position: new naver.maps.LatLng(
+            userCurrentPingPosition.latitude,
+            userCurrentPingPosition.longitude
+          ),
+          map: mapRef.current,
+          icon: {
+            url: '/svg/search/myLocation.svg',
+          },
+        });
 
       markersRef.current = newMarkers;
     }
@@ -105,7 +116,10 @@ export default function NaverMap({
         position: new naver.maps.LatLng(location.latitude, location.longitude),
         map: map,
         icon: {
-          url: '/svg/ping.svg',
+          url:
+            i === locationArray.length - 1
+              ? ''
+              : '/svg/ping.svg',
         },
       });
 
