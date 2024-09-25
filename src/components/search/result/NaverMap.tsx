@@ -47,11 +47,11 @@ export default function NaverMap({
 
   useEffect(() => {
     if (isMapLoaded && mapRef.current) {
-      // Remove existing markers
+      // 기존 마커들 제거
       markersRef.current.forEach((marker) => marker.setMap(null));
       markersRef.current = [];
 
-      // Add new markers
+      // 새 마커 추가
       const newMarkers = locationArray.map((location, i) => {
         const marker = new naver.maps.Marker({
           position: new naver.maps.LatLng(
@@ -60,13 +60,9 @@ export default function NaverMap({
           ),
           map: mapRef.current,
           icon: {
-            url:
-              i === locationArray.length - 1
-                ? ''
-                : '/svg/ping.svg',
+            url: '/svg/ping.svg',
           },
         });
-        
 
         naver.maps.Event.addListener(marker, 'click', () => {
           if (i !== locationArray.length - 1) {
@@ -78,20 +74,31 @@ export default function NaverMap({
         return marker;
       });
 
-      new naver.maps.Marker({
-          position: new naver.maps.LatLng(
-            userCurrentPingPosition.latitude,
-            userCurrentPingPosition.longitude
-          ),
-          map: mapRef.current,
-          icon: {
-            url: '/svg/search/myLocation.svg',
-          },
-        });
-
+      // 새 마커 저장
       markersRef.current = newMarkers;
+
+      // 현재 위치 마커 추가
+      const userMarker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(
+          userCurrentPingPosition.latitude,
+          userCurrentPingPosition.longitude
+        ),
+        map: mapRef.current,
+        icon: {
+          url: '/svg/search/myLocation.svg',
+        },
+      });
+
+      // 유저 위치 마커도 markersRef에 저장
+      markersRef.current.push(userMarker);
     }
-  }, [locationArray, setIsBottomSheetOpen, setPinCardIndex, isMapLoaded]);
+  }, [
+    locationArray,
+    userCurrentPingPosition,
+    setIsBottomSheetOpen,
+    setPinCardIndex,
+    isMapLoaded,
+  ]);
 
   const initializeMap = () => {
     const mapOptions = {
@@ -116,10 +123,7 @@ export default function NaverMap({
         position: new naver.maps.LatLng(location.latitude, location.longitude),
         map: map,
         icon: {
-          url:
-            i === locationArray.length - 1
-              ? ''
-              : '/svg/ping.svg',
+          url: '/svg/ping.svg',
         },
       });
 
