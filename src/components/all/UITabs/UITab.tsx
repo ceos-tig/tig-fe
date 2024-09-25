@@ -105,7 +105,7 @@ export default function UITab({ name, defaultName, className }: TabProps) {
         {currentTab === name ? <GolfSVG /> : <UnfillGolfSVG />}
         <div
           className={cn('text-grey6', {
-            샤ㅅ: currentTab === name,
+            title4: currentTab === name,
             caption2: currentTab !== name,
           })}
         >
