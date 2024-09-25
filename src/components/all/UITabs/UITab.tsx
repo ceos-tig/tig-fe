@@ -21,6 +21,9 @@ import UnfillPocketballSVG from '@public/svg/UITabs/unfillpocketball.svg';
 import UnfillSquashSVG from '@public/svg/UITabs/unfillsquash.svg';
 import UnfillTabletennisSVG from '@public/svg/UITabs/unfilltableTennis.svg';
 import UnfillTennisSVG from '@public/svg/UITabs/unfilltennis.svg';
+import { usePathname, useRouter } from 'next/navigation';
+import { se } from 'date-fns/locale';
+import { categoryMapKorToEng } from '@constant/constant';
 
 interface TabProps {
   defaultName: string;
@@ -31,6 +34,14 @@ interface TabProps {
 export default function UITab({ name, defaultName, className }: TabProps) {
   const currentTab = useTab((state) => state.selectedTab);
   const setCurrentTab = useTab((state) => state.setSelectedTab);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const HandleClick = () => {
+    if (pathname.startsWith('/home')) {
+      router.push(`/home/${categoryMapKorToEng[name]}`);
+    } else setCurrentTab(name);
+  };
 
   useEffect(() => {
     setCurrentTab(defaultName);
@@ -39,140 +50,57 @@ export default function UITab({ name, defaultName, className }: TabProps) {
       setCurrentTab(defaultName);
     };
   }, []);
-  if (name === '전체') {
+  const renderTab = (
+    name: string,
+    IconComponent: React.ComponentType,
+    FilledIconComponent: React.ComponentType,
+    label?: string
+  ) => {
     return (
-      <div className="w-[50px] h-[70px] flex flex-col gap-1 items-center" onClick={()=>{setCurrentTab(name)}}>
-        {currentTab === name ? <AllSVG /> : <UnfillAllSVG />}
+      <div
+        className="w-[50px] h-[70px] flex flex-col gap-1 items-center cursor-pointer"
+        onClick={HandleClick}
+      >
+        {currentTab === name ? <IconComponent /> : <FilledIconComponent />}
         <div
           className={cn('text-grey6', {
             title4: currentTab === name,
             caption2: currentTab !== name,
           })}
         >
-          {name}
+          {label || name}
         </div>
       </div>
     );
+  };
+
+  if (name === '전체') {
+    return renderTab(name, AllSVG, UnfillAllSVG);
   }
   if (name === '당구') {
-    return (
-      <div className="w-[50px] h-[70px] flex flex-col gap-1 items-center cursor-pointer" onClick={()=>{setCurrentTab(name)}}>
-        {currentTab === name ? <PocketballSVG /> : <UnfillPocketballSVG />}
-        <div
-          className={cn('text-grey6', {
-            title4: currentTab === name,
-            caption2: currentTab !== name,
-          })}
-        >
-          {name}
-        </div>
-      </div>
-    );
+    return renderTab(name, PocketballSVG, UnfillPocketballSVG);
   }
   if (name === '탁구') {
-    return (
-      <div className="w-[50px] h-[70px] flex flex-col gap-1 items-center cursor-pointer" onClick={()=>{setCurrentTab(name)}}>
-        {currentTab === name ? <TabletennisSVG /> : <UnfillTabletennisSVG />}
-        <div
-          className={cn('text-grey6', {
-            title4: currentTab === name,
-            caption2: currentTab !== name,
-          })}
-        >
-          {name}
-        </div>
-      </div>
-    );
+    return renderTab(name, TabletennisSVG, UnfillTabletennisSVG);
   }
   if (name === '테니스') {
-    return (
-      <div className="w-[50px] h-[70px] flex flex-col gap-1 items-center cursor-pointer" onClick={()=>{setCurrentTab(name)}}>
-        {currentTab === name ? <TennisSVG /> : <UnfillTennisSVG />}
-        <div
-          className={cn('text-grey6', {
-            title4: currentTab === name,
-            caption2: currentTab !== name,
-          })}
-        >
-          {name}
-        </div>
-      </div>
-    );
+    return renderTab(name, TennisSVG, UnfillTennisSVG);
   }
   if (name === '스크린골프') {
-    return (
-      <div className="w-[50px] h-[70px] flex flex-col gap-1 items-center cursor-pointer" onClick={()=>{setCurrentTab(name)}}>
-        {currentTab === name ? <GolfSVG /> : <UnfillGolfSVG />}
-        <div
-          className={cn('text-grey6', {
-            title4: currentTab === name,
-            caption2: currentTab !== name,
-          })}
-        >
-          {'골프'}
-        </div>
-      </div>
-    );
+    return renderTab(name, GolfSVG, UnfillGolfSVG, '골프');
   }
   if (name === '축구') {
-    return (
-      <div className="w-[50px] h-[70px] flex flex-col gap-1 items-center cursor-pointer" onClick={()=>{setCurrentTab(name)}}>
-        {currentTab === name ? <FootballSVG /> : <UnfillFootballSVG />}
-        <div
-          className={cn('text-grey6', {
-            title4: currentTab === name,
-            caption2: currentTab !== name,
-          })}
-        >
-          {name}
-        </div>
-      </div>
-    );
+    return renderTab(name, FootballSVG, UnfillFootballSVG);
   }
   if (name === '야구') {
-    return (
-      <div className="w-[50px] h-[70px] flex flex-col gap-1 items-center cursor-pointer" onClick={()=>{setCurrentTab(name)}}>
-        {currentTab === name ? <BaseballSVG /> : <UnfillBaseballSVG />}
-        <div
-          className={cn('text-grey6', {
-            title4: currentTab === name,
-            caption2: currentTab !== name,
-          })}
-        >
-          {name}
-        </div>
-      </div>
-    );
+    return renderTab(name, BaseballSVG, UnfillBaseballSVG);
   }
   if (name === '볼링') {
-    return (
-      <div className="w-[50px] h-[70px] flex flex-col gap-1 items-center cursor-pointer" onClick={()=>{setCurrentTab(name)}}>
-        {currentTab === name ? <BallingSVG /> : <UnfillBallingSVG />}
-        <div
-          className={cn('text-grey6', {
-            title4: currentTab === name,
-            caption2: currentTab !== name,
-          })}
-        >
-          {name}
-        </div>
-      </div>
-    );
+    return renderTab(name, BallingSVG, UnfillBallingSVG);
   }
   if (name === '스쿼시') {
-    return (
-      <div className="w-[50px] h-[70px] flex flex-col gap-1 items-center cursor-pointer" onClick={()=>{setCurrentTab(name)}}>
-        {currentTab === name ? <SquashSVG /> : <UnfillSquashSVG />}
-        <div
-          className={cn('text-grey6', {
-            title4: currentTab === name,
-            caption2: currentTab !== name,
-          })}
-        >
-          {name}
-        </div>
-      </div>
-    );
+    return renderTab(name, SquashSVG, UnfillSquashSVG);
   }
+
   return null;
 }

@@ -31,7 +31,6 @@ interface userCurrentPingPositionProp {
 export default function Page() {
   const tabArray = allleisureArray;
   const currentTab = useTab((state) => state.selectedTab);
-  // const currentSubTab = useSubTab((state) => state.selectedTab);
   const subtabArray =
     currentTab === '스크린골프'
       ? golfArray
@@ -44,8 +43,6 @@ export default function Page() {
       : currentTab === '테니스'
       ? tennisArray
       : [];
-  console.log(currentTab);
-  console.log(subtabArray);
   const searchParams = useSearchParams();
   const { search, date, adultCount, teenagerCount, kidsCount, isKeyword } =
     Object.fromEntries(searchParams.entries());
