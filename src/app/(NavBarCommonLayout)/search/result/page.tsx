@@ -28,21 +28,18 @@ interface userCurrentPingPositionProp {
   longitude: number;
 }
 
+const subtabArrays: { [key: string]: string[] } = {
+  스크린골프: golfArray,
+  당구: pocketballArray,
+  야구: baseballArray,
+  스쿼시: squashArray,
+  테니스: tennisArray,
+};
+
 export default function Page() {
   const tabArray = allleisureArray;
   const currentTab = useTab((state) => state.selectedTab);
-  const subtabArray =
-    currentTab === '스크린골프'
-      ? golfArray
-      : currentTab === '당구'
-      ? pocketballArray
-      : currentTab === '야구'
-      ? baseballArray
-      : currentTab === '스쿼시'
-      ? squashArray
-      : currentTab === '테니스'
-      ? tennisArray
-      : [];
+  const subtabArray = subtabArrays[currentTab] || [];
   const searchParams = useSearchParams();
   const { search, date, adultCount, teenagerCount, kidsCount, isKeyword } =
     Object.fromEntries(searchParams.entries());
