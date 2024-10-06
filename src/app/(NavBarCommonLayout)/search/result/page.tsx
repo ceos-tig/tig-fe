@@ -12,6 +12,7 @@ import {
   golfArray,
   pocketballArray,
   squashArray,
+  subtabArrays,
   tennisArray,
 } from '@constant/constant';
 import { formatDate, parse } from 'date-fns';
@@ -27,14 +28,6 @@ interface userCurrentPingPositionProp {
   latitude: number;
   longitude: number;
 }
-
-const subtabArrays: { [key: string]: string[] } = {
-  스크린골프: golfArray,
-  당구: pocketballArray,
-  야구: baseballArray,
-  스쿼시: squashArray,
-  테니스: tennisArray,
-};
 
 export default function Page() {
   const tabArray = allleisureArray;
