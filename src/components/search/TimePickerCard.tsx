@@ -11,7 +11,7 @@ export default function TimePickerCard() {
   const [selectedMinute, setSelectedMinute] = useState<number>(0);
 
   return (
-    <section className="w-full flex flex-col gap-5 p-5 border-b border-grey2">
+    <section className="w-full flex flex-col gap-5 p-5 mb-[100px]">
       <InfoCard number={3} content="시간을 선택해주세요." />
       <div className="w-full h-[160px] flex justify-center items-center title2">
         <Swiper

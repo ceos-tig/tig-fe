@@ -107,9 +107,6 @@ export const useSearchResult = (search: string, isKeyword: string) => {
       setSearchInput({
         searchValue: '',
         searchDate: formatDate(new Date(), "yyyy-MM-dd'T'00:00:00"),
-        adultCount: 0,
-        teenagerCount: 0,
-        kidsCount: 0,
       });
     };
   }, []);

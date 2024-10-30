@@ -20,7 +20,6 @@ export default function Page() {
       <LocationCard />
       <DateCard />
       <TimePickerCard />
-      <PeopleCountCard />
       <ButtonCard />
       {isModalOpen && <SearchModal />}
     </main>
