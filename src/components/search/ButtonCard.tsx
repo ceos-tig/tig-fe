@@ -40,6 +40,7 @@ export default function ButtonCard() {
           ? nearestDistrict
           : encodeURIComponent(inputValue.searchValue),
       date: inputValue.searchDate,
+      time: inputValue.searchTime + ':00',
       isKeyword: inputValue.searchValue === '' ? 'false' : 'true',
     };
     const queryString = new URLSearchParams(query).toString();
