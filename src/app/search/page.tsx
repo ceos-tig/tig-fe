@@ -19,7 +19,7 @@ export default function Page() {
       )}
       <LocationCard />
       <DateCard />
-      <TimePickerCard />
+      {/* <TimePickerCard /> */}
       <ButtonCard />
       {isModalOpen && <SearchModal />}
     </main>
