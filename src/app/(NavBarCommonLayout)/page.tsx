@@ -40,7 +40,6 @@ export default function Home() {
   const [currentBanner, setCurrentBanner] = useState(0);
   const [isBannerClicked, setIsBannerClicked] = useState(false);
   const router = useRouter();
-  console.log(isBannerClicked);
   const CurrentBannerSVG = bannerArray[currentBanner];
 
   const nextBanner = () => {
