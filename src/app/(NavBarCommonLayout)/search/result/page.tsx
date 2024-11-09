@@ -34,10 +34,13 @@ export default function Page() {
   const currentTab = useTab((state) => state.selectedTab);
   const subtabArray = subtabArrays[currentTab] || [];
   const searchParams = useSearchParams();
-  const { search, date, adultCount, teenagerCount, kidsCount, isKeyword } =
-    Object.fromEntries(searchParams.entries());
+  const { search, date, time, isKeyword } = Object.fromEntries(
+    searchParams.entries()
+  );
   const parsedDate = parse(date, "yyyy-MM-dd'T'HH:mm:ss", new Date());
   const formattedDate = formatDate(parsedDate, 'M.dd (EEE)', { locale: ko });
+  const formatDayOfWeek = formatDate(parsedDate, 'EEE').toUpperCase();
+  console.log(formatDayOfWeek);
   const {
     currentLocation,
     filteredSearchResult,
@@ -46,7 +49,7 @@ export default function Page() {
     isBottomSheetOpen,
     isResult,
     recommendedResult,
-  } = useSearchResult(search, isKeyword);
+  } = useSearchResult(search, isKeyword, formatDayOfWeek);
   const [isCurrentLocationUIClicked, setIsCurrentLocationUIClicked] =
     useState<boolean>(false);
 
@@ -84,12 +87,12 @@ export default function Page() {
       />
       <div className="absolute top-[148px] h-[52px] bg-white w-full z-[199]" />
       <div className="absolute top-[148px]  h-[52px] title4 right-[58px] w-[42px] z-[301] bg-gradient-to-l from-white to-transparent"></div>
-      <Tabs
+      {/* <Tabs
         tabArray={subtabArray}
         from="searchSub"
         className="w-5/6 px-5 left-0 top-[148px]"
         rounded
-      />
+      /> */}
       <FilterHeader />
       {isResult && (
         <NaverMap
