@@ -32,6 +32,7 @@ export default function HistoryDetail({
   message,
   clubId,
   imageUrls,
+  gameDescription,
 }: ReservationDetailProps) {
   const router = useRouter();
   return (
@@ -47,6 +48,7 @@ export default function HistoryDetail({
         teenagerCount={teenagerCount}
         kidsCount={kidsCount}
         imageUrls={imageUrls}
+        gameDescription={gameDescription}
         onClick={() => {
           router.push(
             `/detail-page/${clubId}?date=${formatDate(

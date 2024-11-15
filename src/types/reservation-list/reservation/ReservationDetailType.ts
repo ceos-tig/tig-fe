@@ -21,4 +21,5 @@ export interface ReservationDetailProps {
   paymentId: string;
   message: string;
   clubId: string;
+  gameDescription: string;
 }

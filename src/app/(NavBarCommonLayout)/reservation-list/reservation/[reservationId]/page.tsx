@@ -43,6 +43,7 @@ export default function Page({
     updatedAt: '2024-01-01T00:00:00',
     feePrice: 0,
     couponDiscountPrice: 0,
+    gameDescription: '',
   });
   const setIsModalOpen = useModal((state) => state.setSelectedIsModalOpen);
   const [isLoading, setIsLoading] = useState(true);
