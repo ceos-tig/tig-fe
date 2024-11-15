@@ -52,7 +52,6 @@ export default function Page({
   console.log('rendring');
   const router = useRouter();
   const price = usePriceStore((state) => state.price);
-  // 금액이슈 일단보류..
   const formatDayOfWeek = formatDate(new Date(), 'EEE').toUpperCase();
   const isFromReservationPage = usePriceStore(
     (state) => state.isFromReservation
