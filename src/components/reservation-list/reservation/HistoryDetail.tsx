@@ -22,7 +22,7 @@ export default function HistoryDetail({
   reservationId,
   userName,
   phoneNumber,
-  updateAt: paymentTime,
+  updatedAt: paymentTime,
   provider: payMethod,
   price,
   feePrice,
