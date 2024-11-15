@@ -5,12 +5,14 @@ import { usePriceStore } from '@store/priceStore';
 import { cn } from '@utils/cn';
 import { useState } from 'react';
 
-export default function GameCountCard({
+export default function GameCountDistinWeekCard({
   name,
   price,
+  isWeek,
 }: {
   name: string;
   price: number;
+  isWeek: boolean;
 }) {
   const [count, setCount] = useState(0);
   const totalPrice = usePriceStore((state) => state.price);
@@ -48,7 +50,17 @@ export default function GameCountCard({
       )}
     >
       <div className="flex flex-col h-full justify-between">
-        <p className="title2 text-grey7">{name}</p>
+        <div className="flex gap-1 h-[22px]">
+          <p
+            className={cn('w-[30px] rounded-[6px] body4 flex justify-center items-center ', {
+              'bg-[#30FF6B]/20': !isWeek,
+              'bg-[#F45858]/20': isWeek,
+            })}
+          >
+            {isWeek ? '주말' : '평일'}
+          </p>
+          <p className="title2 text-grey7 mt-[2px]">{name}</p>
+        </div>
         <div className="flex justify-between items-center w-[100px]">
           <CountDownSVG
             fill={count === 0 ? '#CED3D6' : '#878D91'}
