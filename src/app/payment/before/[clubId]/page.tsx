@@ -63,10 +63,10 @@ export default function Page({
   useEffect(() => {
     if (!isFromReservationPage) {
       router.replace(
-        `/reservation/game/${params.clubId}?date=${formatDate(
+        `/detail-page/${params.clubId}?date=${formatDate(
           new Date(),
           "yyyy-MM-dd'T'HH:mm:ss"
-        )}&dayOfWeek=${formatDayOfWeek}`
+        )}`
       );
     }
     return () => {
