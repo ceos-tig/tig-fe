@@ -6,20 +6,24 @@ import MakeResButtonCard from '@components/reservation/MakeResButtonCard';
 import RequestCard from '@components/reservation/RequestCard';
 import ResDateCard from '@components/reservation/ResDateCard';
 import ResGameCard from '@components/reservation/ResGameCard';
-import ResPeopleCountCard from '@components/reservation/ResPeopleCountCard';
-import GameCountCard from '@components/reservation/GameCountCard';
 import {
   useGameReservationStore,
   gameReservationInfoInitialState,
 } from '@store/makeReservationInfo';
-import { useGetClubResInfo } from '@apis/reservation/getClubResInfo';
+import {
+  PricesInfo,
+  TennisPrice,
+  useGetClubResInfo,
+} from '@apis/reservation/getClubResInfo';
 import { Toaster } from 'react-hot-toast';
 import { useSearchParams } from 'next/navigation';
 import { addHours, formatDate } from 'date-fns';
 import { timeToMinutes } from '@utils/formatDate';
 import { useSelectedDate } from '@store/selectedDateStore';
-import GameTypeCard from '@components/reservation/ChooseGameType';
 import useTab from '@store/tabNumberStore';
+import FootballCard from '@components/reservation/FootballCard';
+import { usePriceStore } from '@store/priceStore';
+import TennisCard from '@components/reservation/TennisCard';
 
 export default function Page({ params }: { params: { companyId: string } }) {
   const { data, isSuccess } = useGetClubResInfo(params.companyId);
@@ -27,6 +31,8 @@ export default function Page({ params }: { params: { companyId: string } }) {
   const [endTime, setEndTime] = useState('');
   const [clubName, setClubName] = useState('');
   const [address, setAddress] = useState('');
+  const [originalPrices, setOriginalPrices] = useState<TennisPrice[]>([]);
+  const [prices, setPrices] = useState<TennisPrice[]>([]);
   const searchParam = useSearchParams();
   const selectedDate = useSelectedDate((state) => state.selectedDate);
   const setSelectedDate = useSelectedDate((state) => state.setSelectedDate);
@@ -37,9 +43,11 @@ export default function Page({ params }: { params: { companyId: string } }) {
     (state) => state.setGameReservationInfo
   );
   const setTab = useTab((state) => state.setSelectedTab);
+  const setPrice = usePriceStore((state) => state.setPrice);
 
   useEffect(() => {
     if (isSuccess) {
+      setPrice(0);
       const filteredOperatingHours = data?.result.operatingHours.filter(
         (hour) => {
           return hour.dayOfWeek === searchParam.get('dayOfWeek');
@@ -65,6 +73,13 @@ export default function Page({ params }: { params: { companyId: string } }) {
       // API 수정되면 gameType에 맞게 초기화
       console.log(data?.result.category);
       setTab(data?.result.category);
+      const originalPrices = data?.result.prices as TennisPrice[];
+      setOriginalPrices(originalPrices);
+      setPrices(
+        originalPrices.filter(
+          (price) => price.dayOfWeek === searchParam.get('dayOfWeek')
+        ) || []
+      );
     }
     // 언마운트될 때 다시 초기화
     return () => setGameReservationInfo(gameReservationInfoInitialState);
@@ -72,7 +87,6 @@ export default function Page({ params }: { params: { companyId: string } }) {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(formatDate(new Date(selectedDate), 'EEE').toUpperCase());
       const filteredOperatingHours = data?.result.operatingHours.filter(
         (hour) => {
           return (
@@ -104,6 +118,13 @@ export default function Page({ params }: { params: { companyId: string } }) {
           ? filteredOperatingHours[0].endTime.slice(0, 5) || '20:00'
           : '20:00'
       );
+      setPrices(
+        originalPrices?.filter(
+          (price) =>
+            price.dayOfWeek ===
+            formatDate(new Date(selectedDate), 'EEE').toUpperCase()
+        )
+      );
     }
   }, [selectedDate]);
 
@@ -114,7 +135,7 @@ export default function Page({ params }: { params: { companyId: string } }) {
       <ResGameCard startTime={startTime} endTime={endTime} />
       {/* <ResPeopleCountCard /> */}
       {/* <GameTypeCard /> */}
-      {/* <GameCountCard /> */}
+      <TennisCard prices={prices} isWeek={new Date(selectedDate).getDay()===0 || new Date(selectedDate).getDay()===6}/>
       <RequestCard />
       <MakeResButtonCard
         clubName={clubName}

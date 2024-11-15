@@ -6,23 +6,29 @@ import MakeResButtonCard from '@components/reservation/MakeResButtonCard';
 import RequestCard from '@components/reservation/RequestCard';
 import ResDateCard from '@components/reservation/ResDateCard';
 import ResGameCard from '@components/reservation/ResGameCard';
-import ResPeopleCountCard from '@components/reservation/ResPeopleCountCard';
-import GameCountCard from '@components/reservation/GameCountCard';
 import {
   useGameReservationStore,
   gameReservationInfoInitialState,
 } from '@store/makeReservationInfo';
-import { useGetClubResInfo } from '@apis/reservation/getClubResInfo';
+import {
+  BaseballPrice,
+  SquashPrice,
+  useGetClubResInfo,
+} from '@apis/reservation/getClubResInfo';
 import { Toaster } from 'react-hot-toast';
 import { useSearchParams } from 'next/navigation';
 import { addHours, formatDate } from 'date-fns';
 import { timeToMinutes } from '@utils/formatDate';
 import { useSelectedDate } from '@store/selectedDateStore';
-import GameTypeCard from '@components/reservation/ChooseGameType';
 import useTab from '@store/tabNumberStore';
+import FootballCard from '@components/reservation/FootballCard';
+import { usePriceStore } from '@store/priceStore';
+import BaseballCard from '@components/reservation/BaseballCard';
+import SquashCard from '@components/reservation/SquashCard';
 
 export default function Page({ params }: { params: { companyId: string } }) {
   const { data, isSuccess } = useGetClubResInfo(params.companyId);
+  const prices = data?.result.prices as SquashPrice[];
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [clubName, setClubName] = useState('');
@@ -37,9 +43,11 @@ export default function Page({ params }: { params: { companyId: string } }) {
     (state) => state.setGameReservationInfo
   );
   const setTab = useTab((state) => state.setSelectedTab);
+  const setPrice = usePriceStore((state) => state.setPrice);
 
   useEffect(() => {
     if (isSuccess) {
+      setPrice(0);
       const filteredOperatingHours = data?.result.operatingHours.filter(
         (hour) => {
           return hour.dayOfWeek === searchParam.get('dayOfWeek');
@@ -114,7 +122,7 @@ export default function Page({ params }: { params: { companyId: string } }) {
       <ResGameCard startTime={startTime} endTime={endTime} />
       {/* <ResPeopleCountCard /> */}
       {/* <GameTypeCard /> */}
-      {/* <GameCountCard /> */}
+      <SquashCard prices={prices} />
       <RequestCard />
       <MakeResButtonCard
         clubName={clubName}
