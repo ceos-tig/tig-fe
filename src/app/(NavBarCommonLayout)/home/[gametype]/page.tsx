@@ -76,12 +76,12 @@ export default function Home({ params }: { params: { gametype: string } }) {
             from="searchMain"
             className="w-full px-5 top-[58px]"
           />
-          <Tabs
+          {/* <Tabs
             tabArray={subtabArray}
             from="searchSub"
             className="w-full px-5 top-[148px]"
             rounded
-          />
+          /> */}
           {isShowBounce && (
             <div className="absolute top-[58px] left-[72px] z-[400] flex flex-col w-fit animate-bounce">
               <ArrowSVG className="ml-5" />
