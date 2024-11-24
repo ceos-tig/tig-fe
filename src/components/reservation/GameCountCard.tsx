@@ -16,11 +16,7 @@ export default function GameCountCard({
   const pushPrice = usePriceStore((state) => state.pushPrice);
   const popPrice = usePriceStore((state) => state.popPrice);
   const getTopItemName = usePriceStore((state) => state.getTopItemName);
-  const getPriceStackLength = usePriceStore(
-    (state) => state.getPriceStackLength
-  );
   const [count, setCount] = useState(0);
-  const setPrice = usePriceStore((state) => state.setPrice);
   const gameResInfo = useGameReservationStore(
     (state) => state.gameReservationInfo
   );
@@ -49,7 +45,6 @@ export default function GameCountCard({
   }, [totalPrice]);
 
   useEffect(() => {
-    console.log(name, getTopItemName());
     if (name !== getTopItemName()) {
       setCount(0);
     }
