@@ -13,9 +13,9 @@ export default function GameCountCard({
   price: number;
 }) {
   const totalPrice = usePriceStore((state) => state.price);
-  const [updatePrice, setUpdatePrice] = useState(0);
   const pushPrice = usePriceStore((state) => state.pushPrice);
   const popPrice = usePriceStore((state) => state.popPrice);
+  const getTopItemName = usePriceStore((state) => state.getTopItemName);
   const getPriceStackLength = usePriceStore(
     (state) => state.getPriceStackLength
   );
@@ -29,9 +29,7 @@ export default function GameCountCard({
   );
   const countDownHandler = () => {
     if (count === 0) return;
-    setCount(getPriceStackLength() - 1);
-    const updatePrice = totalPrice - price;
-    setUpdatePrice(updatePrice);
+    setCount((prev) => prev - 1);
     popPrice();
     if (count === 1) {
       setGameResInfo({ ...gameResInfo, gameDescription: '' });
@@ -39,10 +37,8 @@ export default function GameCountCard({
   };
 
   const countUpHandler = () => {
-    setCount(getPriceStackLength() + 1);
-    const updatePrice = totalPrice + price;
-    setUpdatePrice(updatePrice);
-    pushPrice(price);
+    setCount((prev) => prev + 1);
+    pushPrice({ name, price });
     setGameResInfo({ ...gameResInfo, gameDescription: name });
   };
 
@@ -53,14 +49,11 @@ export default function GameCountCard({
   }, [totalPrice]);
 
   useEffect(() => {
-    if (totalPrice !== updatePrice) {
-      if (price === totalPrice) {
-        setCount(1);
-      } else {
-        setCount(0);
-      }
+    console.log(name, getTopItemName());
+    if (name !== getTopItemName()) {
+      setCount(0);
     }
-  }, [updatePrice, totalPrice]);
+  }, [getTopItemName()]);
 
   return (
     <section
