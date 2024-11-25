@@ -17,6 +17,7 @@ const nextConfig = {
     return config;
   },
   reactStrictMode: false,
+  unoptimized: true,
 };
 
 export default nextConfig;
