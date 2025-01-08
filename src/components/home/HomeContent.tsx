@@ -15,7 +15,7 @@ export default function HomeContent() {
   const { isVisible } = useScroll();
 
   return (
-    <main className="w-full flex flex-col pb-[40px] bg-white">
+    <main className="w-full flex flex-col pb-[40px] bg-white shadow-mainShadow">
       <SearchHeader isHomeOrResultPage className="sticky" />
       <Tabs
         tabArray={MAINARRAY}
