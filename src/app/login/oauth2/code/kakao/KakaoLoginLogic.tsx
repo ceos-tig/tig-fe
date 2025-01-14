@@ -34,7 +34,10 @@ export default function KakaoLoginLogic() {
           // TODO: 토큰으로 변경 시 필요 x, 구글에도 적용해야 함
           localStorage.setItem('accessToken', data.result.accessToken);
           setCookie('refreshToken', data.result.accessToken);
-          if (process.env.NEXT_PUBLIC_DEVELOPMENT_MODE === 'true') {
+          if (
+            process.env.NEXT_PUBLIC_DEVELOPMENT_MODE &&
+            process.env.NEXT_PUBLIC_DEVELOPMENT_MODE === 'true'
+          ) {
             router.push(sessionStorage.getItem('prev') || '/');
           }
         } else {
