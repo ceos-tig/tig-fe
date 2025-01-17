@@ -32,8 +32,8 @@ export default function KakaoLoginLogic() {
         if (response.ok) {
           const data: kakaoLoginResponseProp = await response.json();
           // TODO: 토큰으로 변경 시 필요 x, 구글에도 적용해야 함
-          localStorage.setItem('accessToken', data.result.accessToken);
-          setCookie('refreshToken', data.result.accessToken);
+          // localStorage.setItem('accessToken', data.result.accessToken);
+          setCookie('accessToken', data.result.accessToken);
           if (
             process.env.NEXT_PUBLIC_DEVELOPMENT_MODE &&
             process.env.NEXT_PUBLIC_DEVELOPMENT_MODE === 'true'
