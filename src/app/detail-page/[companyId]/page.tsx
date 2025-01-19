@@ -16,9 +16,9 @@ export default async function Page({
     params.companyId
   );
   // console.log('rseponse', specificInfoForGuest);
-  console.log('rseponse', specificInfoForUser);
+  // console.log('rseponse', specificInfoForUser);
   console.log('cookie', cookies().get('accessToken'));
-  if (cookies().get('accessToken') === null) {
+  if (cookies().get('accessToken') === undefined) {
     return (
       <CustomSuspense fallback={<TigLoadingPage />}>
         <DetailPage params={params} info={specificInfoForGuest.result} />

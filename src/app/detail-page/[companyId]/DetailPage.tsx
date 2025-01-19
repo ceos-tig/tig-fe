@@ -71,7 +71,6 @@ export default function DetailPage({
   params: { companyId: string };
   info: clubInfoProps;
 }) {
-  console.log('info', info);
   const { data: reviewList } = useGetAllClubReview(params.companyId);
   const detailtabArrayWhenNoReview = detailArrayWhenNoReview;
   const detailtabArrayWhenReview = detailArrayWhenReview;
