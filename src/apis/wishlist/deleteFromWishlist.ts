@@ -43,7 +43,7 @@ export const useDeleteFromWishList = () => {
       if (context?.prevWishlist) {
         queryClient.setQueryData(['wishlist'], context.prevWishlist);
       }
-      window.console.log('error', error);
+      console.log('error', error);
     },
 
     // 실패 성공 여부에 상관없이 해당 쿼리를 무효화
