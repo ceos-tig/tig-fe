@@ -17,7 +17,6 @@ export default function WishListPage({ cookies }: { cookies: string }) {
     queryKey: ['wishlist'],
     queryFn: () => getWishList(cookies),
   });
-  console.log('wishList', wishList);
   const selectedTab = useTab((state) => state.selectedTab);
   const [filteredWishList, setFilteredWishList] = useState<ResultCardProps[]>(
     wishList.result

@@ -48,7 +48,7 @@ export const useDeleteFromWishList = () => {
 
     // 실패 성공 여부에 상관없이 해당 쿼리를 무효화
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['wishlist'] });
+      // queryClient.invalidateQueries({ queryKey: ['wishlist'] });
       queryClient.invalidateQueries({ queryKey: ['homeData'] });
     },
   });

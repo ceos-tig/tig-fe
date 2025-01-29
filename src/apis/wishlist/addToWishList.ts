@@ -101,8 +101,8 @@ export const useAddToWishList = () => {
 
     // 완료 시(성공/실패 불문) 캐시 무효화
     onSettled: () => {
-      queryCache.clear();
-      queryClient.refetchQueries({ queryKey: ['wishlist']});
+      // queryCache.clear();
+      // queryClient.refetchQueries({ queryKey: ['wishlist']});
 
       // queryClient.invalidateQueries({
       //   queryKey: ['wishlist'],
