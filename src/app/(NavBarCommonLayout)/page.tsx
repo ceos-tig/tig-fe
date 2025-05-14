@@ -13,7 +13,6 @@ export default function Home() {
     <main className="w-full flex flex-col pb-[40px] bg-white shadow-mainShadow">
       <HomeContent isLogin={isLogin}>
         <HomeBanner />
-        <UIList />
       </HomeContent>
     </main>
   );

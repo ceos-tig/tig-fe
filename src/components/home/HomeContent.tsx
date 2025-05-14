@@ -5,9 +5,10 @@ import SearchHeader from '@components/all/SearchHeader';
 import HomeCardList from '@components/home/HomeCardList';
 import useGeolocation from '@hooks/home/useGeoLocation';
 import Footer from '@components/all/Footer/Footer';
-import UIList from '@components/home/UIList';
-import HomeBanner from '@components/home/HomeBanner';
 import { useScroll } from '@hooks/useScroll';
+import useTab from '@store/tabNumberStore';
+import SportsUIList from './SportsUIList';
+import PackageUIList from './PackageUIList';
 
 export default function HomeContent({
   isLogin,
@@ -19,6 +20,7 @@ export default function HomeContent({
   const MAINARRAY = mainArray;
   const { clubCards, recommendClubCards } = useGeolocation(isLogin);
   const { isVisible } = useScroll();
+  const currentTab = useTab((state) => state.selectedTab);
 
   return (
     <>
@@ -31,8 +33,23 @@ export default function HomeContent({
         }`}
       />
       {children}
-      <HomeCardList title="근처에서 즐길 수 있는 스포츠예요" Card={clubCards} />
-      <HomeCardList title="이런 스포츠 어때요?" Card={recommendClubCards} />
+      {currentTab === '스포츠' && <SportsUIList />}
+      {currentTab === '패키지' && <PackageUIList />}
+      {currentTab === '스포츠' && (
+        <>
+          <HomeCardList
+            title="근처에서 즐길 수 있는 스포츠예요"
+            Card={clubCards}
+          />
+          <HomeCardList title="이런 스포츠 어때요?" Card={recommendClubCards} />
+        </>
+      )}
+      {currentTab === '패키지' && (
+        <>
+          <HomeCardList title="이런 곳은 어때요?" Card={clubCards} />
+          <HomeCardList title="추천하는 서비스에요" Card={recommendClubCards} />
+        </>
+      )}
       <Footer />
     </>
   );
