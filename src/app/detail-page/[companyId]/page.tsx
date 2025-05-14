@@ -10,14 +10,10 @@ export default async function Page({
 }: {
   params: { companyId: string };
 }) {
-  console.log('params', params);
   const specificInfoForGuest = await getSpecificClubInfo(params.companyId);
   const specificInfoForUser = await getSpecificClubInfoForLogin(
     params.companyId
   );
-  // console.log('rseponse', specificInfoForGuest);
-  // console.log('rseponse', specificInfoForUser);
-  console.log('cookie', cookies().get('accessToken'));
   if (cookies().get('accessToken') === undefined) {
     return (
       <CustomSuspense fallback={<TigLoadingPage />}>
