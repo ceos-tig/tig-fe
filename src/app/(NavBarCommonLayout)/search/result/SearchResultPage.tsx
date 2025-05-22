@@ -8,6 +8,7 @@ import NoSearchResult from '@components/search/result/NoSearchResult';
 import PinCard from '@components/search/result/PinCard';
 import {
   allleisureArray,
+  allpackageArray,
   baseballArray,
   golfArray,
   pocketballArray,
@@ -31,14 +32,14 @@ interface userCurrentPingPositionProp {
 }
 
 export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
-  const tabArray = allleisureArray;
   const currentTab = useTab((state) => state.selectedTab);
   const subtabArray = subtabArrays[currentTab] || [];
   const { location } = useLocation();
   const searchParams = useSearchParams();
-  const { search, date, time, isKeyword } = Object.fromEntries(
+  const { search, date, time, isKeyword, from } = Object.fromEntries(
     searchParams.entries()
   );
+  const tabArray = from === 'sports' ? allleisureArray : allpackageArray;
   const parsedDate = parse(date, "yyyy-MM-dd'T'HH:mm:ss", new Date());
   const formattedDate = formatDate(parsedDate, 'M.dd (EEE)', { locale: ko });
   const formatDayOfWeek = formatDate(parsedDate, 'EEE').toUpperCase();
@@ -85,6 +86,7 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
       )}
       {isResult && isBottomSheetOpen && (
         <BottomSheet
+          from={from}
           results={filteredSearchResult}
           handleMyLocation={handleMyLocation}
           date={date}
