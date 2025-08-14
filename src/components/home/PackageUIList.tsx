@@ -9,7 +9,7 @@ export default function PackageUIList() {
         <UICardList type="BUS" />
       </div>
       <div className="w-full justify-around flex">
-        <UICardList type="OUTLET_CAFE" />
+        <UICardList type="CATERING" />
         <UICardList type="LUNCH_BOX" />
         <UICardList type="GROUP_UNIFORM" />
       </div>

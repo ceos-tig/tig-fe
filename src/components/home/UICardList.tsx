@@ -27,7 +27,7 @@ interface UICardListProps {
     | 'GOLF_COURSE'
     | 'PENSION'
     | 'BUS'
-    | 'OUTLET_CAFE'
+    | 'CATERING'
     | 'LUNCH_BOX'
     | 'GROUP_UNIFORM';
 }
@@ -154,7 +154,7 @@ export default function UICardList({ type }: UICardListProps) {
       </Link>
     );
   }
-  if (type === 'OUTLET_CAFE') {
+  if (type === 'CATERING') {
     return (
       <Link
         className="flex items-center gap-1 flex-col body4 text-grey6 cursor-pointer"

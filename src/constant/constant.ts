@@ -141,7 +141,7 @@ export const packageArrayMapKorToEng: { [key: string]: string } = {
   골프장: 'GOLF_COURSE',
   펜션: 'PENSION',
   버스: 'BUS',
-  출장뷔페: 'OUTLET_CAFE',
+  출장뷔페: 'CATERING',
   도시락: 'LUNCH_BOX',
   단체복: 'GROUP_UNIFORM',
 };
@@ -150,7 +150,7 @@ export const packageArrayMapEngToKor: { [key: string]: string } = {
   GOLF_COURSE: '골프장',
   PENSION: '펜션',
   BUS: '버스',
-  OUTLET_CAFE: '출장뷔페',
+  CATERING: '출장뷔페',
   LUNCH_BOX: '도시락',
   GROUP_UNIFORM: '단체복',
 };
