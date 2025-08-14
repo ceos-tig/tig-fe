@@ -3,22 +3,12 @@ import { useState } from 'react';
 import { useSelectedDate } from '@store/selectedDateStore';
 import DateTimePicker from './DateTimePicker';
 import DateTimePickerModal from './DateTimePickerModal';
+import { formatDateKor, formatTime } from '@utils/formatDate';
 
 type TravelType = '왕복' | '편도';
 
 interface TravelInfoCardProps {
   travelType: TravelType;
-}
-
-function formatDateKor(date: Date | null) {
-  if (!date) return '';
-  const days = ['일', '월', '화', '수', '목', '금', '토'];
-  return `${date.getMonth() + 1}.${date.getDate()}(${days[date.getDay()]})`;
-}
-
-function formatTime(time: string | null) {
-  if (!time) return '';
-  return time;
 }
 
 export default function TravelInfoCard({ travelType }: TravelInfoCardProps) {
