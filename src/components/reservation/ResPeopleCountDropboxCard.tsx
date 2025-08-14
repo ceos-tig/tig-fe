@@ -11,7 +11,11 @@ const PEOPLE_OPTIONS = [
   99, 100,
 ];
 
-export default function ResPeopleCountDropboxCard() {
+export default function ResPeopleCountDropboxCard({
+  number = 2,
+}: {
+  number?: number;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(2);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -32,7 +36,7 @@ export default function ResPeopleCountDropboxCard() {
 
   return (
     <section className="w-full flex flex-col p-5 mt-5 border-b border-grey2">
-      <InfoCard number={2} content="인원을 선택해주세요." />
+      <InfoCard number={number} content="인원을 선택해주세요." />
       <div className="mt-4 flex items-center justify-between">
         <span className="text-[16px] font-semibold">인원 수</span>
         <div className="relative w-[86px]" ref={dropdownRef}>
