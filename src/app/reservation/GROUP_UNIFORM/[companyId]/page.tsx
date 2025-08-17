@@ -27,6 +27,8 @@ import ResPeopleCountDropboxCard from '@components/reservation/ResPeopleCountDro
 import ResPeriodDateCard from '@components/reservation/ResPeriodDateCard';
 import InfoCard from '@components/all/InfoCard';
 import TravelnfoCard from '@components/reservation/TravelInfoCard';
+import DateWithReceiptTimeCard from '@components/reservation/DateWithReceiptTimeCard';
+import AddressCard from '@components/reservation/AddressCard';
 
 type TravelType = '왕복' | '편도';
 
@@ -124,50 +126,12 @@ export default function Page({ params }: { params: { companyId: string } }) {
   return (
     <main className="w-full h-full overflow-y-scroll flex flex-col ">
       <Header buttonType="back" isCenter title="예약하기" />
-      <div className="flex flex-col gap-5 p-5 mt-5 border-b border-grey2 pt-[68px]">
-        <InfoCard number={1} content="여행 유형을 선택해주세요." />
-        <div className="flex gap-2">
-          <div
-            className={`w-full py-5 px-4 rounded-[12px] border-[1px]  bg-primary_orange2 title2 grey7 cursor-pointer ${
-              gameReservationInfo.travelType === '왕복'
-                ? 'bg-primary_orange2 border-primary_orange1'
-                : 'bg-white border-grey3'
-            }`}
-            onClick={() =>
-              setGameReservationInfo({
-                ...gameReservationInfo,
-                travelType: '왕복',
-              })
-            }
-          >
-            왕복
-          </div>
-          <div
-            className={`w-full py-5 px-4 rounded-[12px] border-[1px] bg-primary_orange2 title2 grey7 cursor-pointer ${
-              gameReservationInfo.travelType === '편도'
-                ? 'bg-primary_orange2 border-primary_orange1'
-                : 'bg-white border-grey3'
-            }`}
-            onClick={() =>
-              setGameReservationInfo({
-                ...gameReservationInfo,
-                travelType: '편도',
-              })
-            }
-          >
-            편도
-          </div>
-        </div>
-      </div>
-      <TravelnfoCard travelType={gameReservationInfo.travelType} />
-      {/* <ResGameCard startTime={startTime} endTime={endTime} /> */}
-      {/* <ResPeopleCountDropboxCard /> */}
-      {/* <GameTypeCard /> */}
+      <AddressCard number={1} />
       <FootballCard
         prices={(data?.result.prices as SoccerPrice[]) || []}
-        number={3}
+        number={2}
       />
-      <RequestCard number={4} />
+      <RequestCard number={3} />
       <MakeResButtonCard
         clubName={clubName}
         address={address}

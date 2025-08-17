@@ -80,7 +80,7 @@ export default function BeforeFirstStageCard({
             </span>
           </div>
         )}
-        {gameType !== 'BUS' && (
+        {gameType !== 'BUS' && gameType !== 'GROUP_UNIFORM' && (
           <div className="w-full flex justify-between items-center">
             <span className="title4 text-grey4">날짜</span>
             <span className="body4 text-grey6">
@@ -88,13 +88,13 @@ export default function BeforeFirstStageCard({
                 ? formatReservationShowingDate(date) +
                   ' - ' +
                   formatReservationShowingDate(endDate)
-                : gameType === 'CATERING'
+                : gameType === 'CATERING' || gameType === 'LUNCH_BOX'
                 ? formatReservationShowingDate(receiptDate)
                 : formatReservationShowingDate(startTime)}
             </span>
           </div>
         )}
-        {gameType === 'CATERING' && (
+        {(gameType === 'CATERING' || gameType === 'LUNCH_BOX') && (
           <div className="w-full flex justify-between items-center">
             <span className="title4 text-grey4">수령 시간</span>
             <span className="body4 text-grey6">
@@ -102,7 +102,7 @@ export default function BeforeFirstStageCard({
             </span>
           </div>
         )}
-        {gameType === 'CATERING' && (
+        {(gameType === 'CATERING' || gameType === 'LUNCH_BOX' || gameType === 'GROUP_UNIFORM') && (
           <div className="w-full flex justify-between items-center">
             <span className="title4 text-grey4">주소</span>
             <span className="body4 text-grey6">{deliveryAddress}</span>
@@ -110,7 +110,9 @@ export default function BeforeFirstStageCard({
         )}
         {gameType !== 'PENSION' &&
           gameType !== 'BUS' &&
-          gameType !== 'CATERING' && (
+          gameType !== 'CATERING' &&
+          gameType !== 'LUNCH_BOX' &&
+          gameType !== 'GROUP_UNIFORM' && (
             <div className="w-full flex justify-between items-center">
               <span className="title4 text-grey4">시작 시간</span>
               <span className="body4 text-grey6">
@@ -123,7 +125,7 @@ export default function BeforeFirstStageCard({
               </span>
             </div>
           )}
-        {gameType !== 'BUS' && (
+        {gameType !== 'BUS' && gameType !== 'GROUP_UNIFORM' && (
           <div className="w-full flex justify-between items-center">
             <span className="title4 text-grey4">인원</span>
             <span className="body4 text-grey6">
@@ -131,13 +133,18 @@ export default function BeforeFirstStageCard({
             </span>
           </div>
         )}
-        {gameType !== 'PENSION' && (
+        {gameType !== 'PENSION' && gameType !== 'LUNCH_BOX' && (
           <div className="w-full flex justify-between items-center">
             {gameType === 'GOLF_COURSE' ||
             gameType === 'BUS' ||
             gameType === 'CATERING' ? (
               <>
                 <span className="title4 text-grey4">옵션</span>
+                <span className="body4 text-grey6">{gameDescription}</span>
+              </>
+            ) : gameType === 'GROUP_UNIFORM' ? (
+              <>
+                <span className="title4 text-grey4">수량</span>
                 <span className="body4 text-grey6">{gameDescription}</span>
               </>
             ) : (
