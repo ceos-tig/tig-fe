@@ -84,6 +84,18 @@ export default function MakeResButtonCard({
         return;
       }
     }
+    else if (gameType === 'CATERING') {
+      if (!clubId ||
+        !gameResInfo.date ||
+        !gameResInfo.receiptDate ||
+        !gameResInfo.deliveryAddress
+        // curPrice === 0 버스는 가격이 0원이어도 예약 가능(임시)
+        ) {
+        console.log(gameResInfo);
+        handleWrongSubmit('GAME');
+        return;
+      }
+    }
     else if (
       !clubId ||
       !gameResInfo.startTime ||
@@ -122,6 +134,9 @@ export default function MakeResButtonCard({
       returnDate: gameResInfo.returnDate || '',
       departurePlace: gameResInfo.departurePlace || '',
       returnPlace: gameResInfo.returnPlace || '',
+      receiptDate: gameResInfo.receiptDate || '',
+      receiptTime: gameResInfo.receiptTime || '',
+      deliveryAddress: gameResInfo.deliveryAddress || '',
     };
     const queryString = new URLSearchParams(query).toString();
     setIsFromReservationPage(true);

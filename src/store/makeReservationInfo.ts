@@ -18,6 +18,8 @@ export interface MakeGameReservationInfoProps extends MakeReservationInfoProps {
   returnDate: string | null;
   departurePlace: string | null;
   returnPlace: string | null;
+  receiptDate: string | null;
+  deliveryAddress: string | null;
 }
 interface MakeTimeReservationInfoProps extends MakeReservationInfoProps {
   endTime: string | null;
@@ -51,11 +53,13 @@ export const gameReservationInfoInitialState: MakeGameReservationInfoProps = {
   request: '',
   gameCount: 0,
   gameDescription: '',
-  travelType: '왕복', 
+  travelType: '왕복',
   departureDate: null,
   returnDate: null,
   departurePlace: null,
   returnPlace: null,
+  receiptDate: null,
+  deliveryAddress: null,
 };
 
 export const useGameReservationStore = create<GameReservationStore>((set) => ({

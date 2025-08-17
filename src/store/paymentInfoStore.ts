@@ -20,6 +20,8 @@ export interface paymentFirstStageInfoProps {
   returnDate: string;
   departurePlace: string;
   returnPlace: string;
+  receiptDate: string;
+  deliveryAddress: string;
 }
 
 interface paymentFirstStageStore {
@@ -49,6 +51,8 @@ export const usePaymentFirstStage = create<paymentFirstStageStore>((set) => ({
     returnDate: '',
     departurePlace: '',
     returnPlace: '',
+    receiptDate: '',
+    deliveryAddress: '',
   },
   setFirstStageInfoObject: (status: paymentFirstStageInfoProps) =>
     set({ firstStageInfoObject: status }),
