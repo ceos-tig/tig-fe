@@ -67,24 +67,42 @@ export default function PeriodCalendar() {
     if (date < subDays(new Date(), 1)) {
       return;
     }
+    const formattedDate = formatDate(date, "yyyy-MM-dd'T'HH:mm:ss");
+
     if (!startDate || (startDate && endDate)) {
       setStartDate(date);
       setEndDate(null);
+      // 함수형 업데이트로 최신 상태 보장
+      setGameReservationInfo((prev) => ({
+        ...prev,
+        date: formattedDate,
+        endDate: null,
+      }));
     } else if (startDate && !endDate) {
       if (isAfter(date, startDate)) {
         setEndDate(date);
+        setGameReservationInfo((prev) => ({
+          ...prev,
+          endDate: formattedDate,
+        }));
       } else {
         setStartDate(date);
         setEndDate(null);
+        setGameReservationInfo((prev) => ({
+          ...prev,
+          date: formattedDate,
+          endDate: null,
+        }));
       }
     }
-    const formattedDate = formatDate(date, "yyyy-MM-dd'T'HH:mm:ss");
+
+    // pathname에 따른 추가 상태 업데이트
     if (pathname.startsWith('/reservation/game')) {
-      setGameReservationInfo({ ...gameReservationInfo, date: formattedDate });
+      setGameReservationInfo((prev) => ({ ...prev, date: formattedDate }));
     } else if (pathname.startsWith('/reservation/time')) {
-      setTimeReservationInfo({ ...timeReservationInfo, date: formattedDate });
+      setTimeReservationInfo((prev) => ({ ...prev, date: formattedDate }));
     } else {
-      setSearchInputInfo({ ...searchInputInfo, searchDate: formattedDate });
+      setSearchInputInfo((prev) => ({ ...prev, searchDate: formattedDate }));
     }
   };
 
@@ -136,7 +154,6 @@ export default function PeriodCalendar() {
                   const isPast = day < subDays(new Date(), 1);
                   const isStart = startDate && isSameDay(day, startDate);
                   const isEnd = endDate && isSameDay(day, endDate);
-                  console.log(isStart, isEnd);
                   const inRange =
                     startDate &&
                     endDate &&
