@@ -15,6 +15,11 @@ export interface paymentFirstStageInfoProps {
   gameDescription: string;
   gameType: string;
   endDate: string;
+  travelType: string;
+  departureDate: string;
+  returnDate: string;
+  departurePlace: string;
+  returnPlace: string;
 }
 
 interface paymentFirstStageStore {
@@ -39,6 +44,11 @@ export const usePaymentFirstStage = create<paymentFirstStageStore>((set) => ({
     gameDescription: '',
     gameType: '',
     endDate: '',
+    travelType: '',
+    departureDate: '',
+    returnDate: '',
+    departurePlace: '',
+    returnPlace: '',
   },
   setFirstStageInfoObject: (status: paymentFirstStageInfoProps) =>
     set({ firstStageInfoObject: status }),

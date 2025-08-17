@@ -16,7 +16,12 @@ interface BeforeFirstStageCardProps {
   price: number;
   gameDescription: string;
   gameType: string;
-  endDate: string;
+  endDate: string;  
+  travelType: string;
+  departureDate: string;
+  returnDate: string;
+  departurePlace: string;
+  returnPlace: string;
 }
 
 export default function BeforeFirstStageCard({
@@ -33,6 +38,11 @@ export default function BeforeFirstStageCard({
   gameDescription,
   gameType,
   endDate,
+  travelType,
+  departureDate,
+  returnDate,
+  departurePlace,
+  returnPlace,
 }: BeforeFirstStageCardProps) {
   return (
     <section className="w-eightNineWidth h-fit rounded-[10px] flex justify-center bg-white mt-[30px] py-5">
@@ -42,15 +52,33 @@ export default function BeforeFirstStageCard({
           <span className="body4 text-grey5">{clubAddress}</span>
         </p>
         <div className="w-full border-b-[1px] border-grey2" />
-        <div className="w-full flex justify-between items-center">
+        {gameType === 'BUS' && <div className="w-full flex justify-between items-center">
+          <span className="title4 text-grey4">여행 유형</span>
+          <span className="body4 text-grey6">
+            {travelType}
+          </span>
+        </div>}
+        {gameType === 'BUS' && <div className="w-full flex justify-between items-center">
+          <span className="title4 text-grey4">가는 날</span>
+          <span className="body4 text-grey6">
+            {departurePlace}{' '}{formatReservationShowingDate(departureDate)}{' '}{extractOnlyTime(departureDate)}
+          </span>
+        </div>}
+        {gameType === 'BUS' && travelType === '왕복' && <div className="w-full flex justify-between items-center">
+          <span className="title4 text-grey4">오는 날 </span>
+          <span className="body4 text-grey6">
+            {returnPlace}{' '}{formatReservationShowingDate(returnDate)}{' '}{extractOnlyTime(returnDate)}
+          </span>
+        </div>}
+        {gameType !== 'BUS' && <div className="w-full flex justify-between items-center">
           <span className="title4 text-grey4">날짜</span>
           <span className="body4 text-grey6">
             {gameType === 'PENSION'
               ? formatReservationShowingDate(date) + ' - ' + formatReservationShowingDate(endDate)
               : formatReservationShowingDate(startTime)}
           </span>
-        </div>
-        {gameType !== 'PENSION' && <div className="w-full flex justify-between items-center">
+        </div>}
+        {gameType !== 'PENSION' && gameType !== 'BUS' && <div className="w-full flex justify-between items-center">
           <span className="title4 text-grey4">시작 시간</span>
           <span className="body4 text-grey6">
             {/* {parseInt(extractOnlyTime(startTime).slice(0, 2)) <= 12
@@ -61,14 +89,14 @@ export default function BeforeFirstStageCard({
             {/* {endTime ? extractOnlyTime(endTime) : null} */}
           </span>
         </div>}
-        <div className="w-full flex justify-between items-center">
+        {gameType !== 'BUS' && <div className="w-full flex justify-between items-center">
           <span className="title4 text-grey4">인원</span>
           <span className="body4 text-grey6">
             {adultCount !== 0 && `${adultCount}명`}
           </span>
-        </div>
+        </div>}
         {gameType !== 'PENSION' && <div className="w-full flex justify-between items-center">
-          {gameType === 'GOLF_COURSE' ? (
+          {gameType === 'GOLF_COURSE' || gameType === 'BUS' ? (
             <>
               <span className="title4 text-grey4">옵션</span>
               <span className="body4 text-grey6">{gameDescription}</span>

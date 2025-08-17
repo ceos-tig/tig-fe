@@ -61,13 +61,25 @@ export default function MakeResButtonCard({
 
   const handleReservation = () => {
     // 업체가 들어옴에 따라 게임별로 분류
-    console.log(gameResInfo.endDate);
     if (gameType === 'PENSION') {
       if (!clubId ||
         !gameResInfo.date ||
         !gameResInfo.endDate ||
         // curPrice === 0 펜션은 가격이 0원이어도 예약 가능(임시)
         gameResInfo.adultCount === 0) {
+        handleWrongSubmit('GAME');
+        return;
+      }
+    }
+    else if (gameType === 'BUS') {
+      if (!clubId ||
+        !gameResInfo.date ||
+        !gameResInfo.departureDate ||
+        !gameResInfo.departurePlace ||
+        !gameResInfo.returnPlace
+        // curPrice === 0 버스는 가격이 0원이어도 예약 가능(임시)
+        ) {
+        console.log(gameResInfo);
         handleWrongSubmit('GAME');
         return;
       }
@@ -105,6 +117,11 @@ export default function MakeResButtonCard({
       gameDescription:
         gameResInfo.gameDescription + ', ' + getPriceStackLength() + '회',
       message: gameResInfo.request,
+      travelType: gameResInfo.travelType,
+      departureDate: gameResInfo.departureDate || '',
+      returnDate: gameResInfo.returnDate || '',
+      departurePlace: gameResInfo.departurePlace || '',
+      returnPlace: gameResInfo.returnPlace || '',
     };
     const queryString = new URLSearchParams(query).toString();
     setIsFromReservationPage(true);

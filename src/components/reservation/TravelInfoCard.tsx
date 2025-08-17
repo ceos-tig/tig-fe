@@ -1,9 +1,11 @@
 import InfoCard from '@components/all/InfoCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelectedDate } from '@store/selectedDateStore';
+import { useGameReservationStore } from '@store/makeReservationInfo';
 import DateTimePicker from './DateTimePicker';
 import DateTimePickerModal from './DateTimePickerModal';
 import { formatDateKor, formatTime } from '@utils/formatDate';
+import { formatDate } from 'date-fns';
 
 type TravelType = '왕복' | '편도';
 
@@ -25,6 +27,39 @@ export default function TravelInfoCard({ travelType }: TravelInfoCardProps) {
   const selectedDateStr = useSelectedDate((state) => state.selectedDate);
   const selectedDate = selectedDateStr ? new Date(selectedDateStr) : null;
 
+  // 전역 상태에서 여행 정보 가져오기
+  const gameReservationInfo = useGameReservationStore(
+    (state) => state.gameReservationInfo
+  );
+  const setGameReservationInfo = useGameReservationStore(
+    (state) => state.setGameReservationInfo
+  );
+
+  // 전역 상태에서 출발지, 도착지 가져오기
+  const [departurePlace, setDeparturePlace] = useState<string>(
+    gameReservationInfo.departurePlace || ''
+  );
+  const [returnPlace, setReturnPlace] = useState<string>(
+    gameReservationInfo.returnPlace || ''
+  );
+
+  // 전역 상태와 로컬 상태 동기화
+  useEffect(() => {
+    if (gameReservationInfo.departureDate) {
+      setDepartureDate(new Date(gameReservationInfo.departureDate));
+    }
+    if (gameReservationInfo.returnDate) {
+      setReturnDate(new Date(gameReservationInfo.returnDate));
+    }
+    setDeparturePlace(gameReservationInfo.departurePlace || '');
+    setReturnPlace(gameReservationInfo.returnPlace || '');
+  }, [
+    gameReservationInfo.departureDate,
+    gameReservationInfo.returnDate,
+    gameReservationInfo.departurePlace,
+    gameReservationInfo.returnPlace,
+  ]);
+
   return (
     <section className="w-full flex flex-col p-5 mt-5 border-b border-grey2">
       <InfoCard number={2} content="여행 정보를 입력해주세요." />
@@ -36,6 +71,14 @@ export default function TravelInfoCard({ travelType }: TravelInfoCardProps) {
           <input
             className="w-full py-5 px-4 rounded-[12px] border-[1px] body1 grey7 cursor-pointer border-grey3 focus:border-primary_orange1"
             placeholder="출발지 입력"
+            value={departurePlace}
+            onChange={(e) => {
+              setDeparturePlace(e.target.value);
+              setGameReservationInfo({
+                ...gameReservationInfo,
+                departurePlace: e.target.value,
+              });
+            }}
           />
         </div>
         <div className="w-full flex flex-col gap-3">
@@ -43,6 +86,14 @@ export default function TravelInfoCard({ travelType }: TravelInfoCardProps) {
           <input
             className="w-full py-5 px-4 rounded-[12px] border-[1px] body1 grey7 cursor-pointer border-grey3 focus:border-primary_orange1"
             placeholder="도착지 입력"
+            value={returnPlace}
+            onChange={(e) => {
+              setReturnPlace(e.target.value);
+              setGameReservationInfo({
+                ...gameReservationInfo,
+                returnPlace: e.target.value,
+              });
+            }}
           />
         </div>
       </div>
@@ -75,6 +126,12 @@ export default function TravelInfoCard({ travelType }: TravelInfoCardProps) {
         onClose={() => setOpen(false)}
         onConfirm={() => {
           setDepartureDate(selectedDate);
+          if (selectedDate) {
+            setGameReservationInfo({
+              ...gameReservationInfo,
+              departureDate: formatDate(selectedDate, 'yyyy-MM-dd'),
+            });
+          }
           setOpen(false);
         }}
         type="date"
@@ -86,7 +143,18 @@ export default function TravelInfoCard({ travelType }: TravelInfoCardProps) {
         onClose={() => setOpenTime(false)}
         onConfirm={() => setOpenTime(false)}
         type="time"
-        onTimeSelect={(time) => setDepartureTime(time)}
+        onTimeSelect={(time) => {
+          setDepartureTime(time);
+          // 시간 정보는 departureDate에 포함되어야 하므로, 날짜와 시간을 결합
+          if (departureDate && time) {
+            const dateTimeString =
+              formatDate(departureDate, 'yyyy-MM-dd') + 'T' + time;
+            setGameReservationInfo({
+              ...gameReservationInfo,
+              departureDate: dateTimeString,
+            });
+          }
+        }}
       />
 
       {/* 오는 날 날짜 선택 모달 */}
@@ -96,6 +164,12 @@ export default function TravelInfoCard({ travelType }: TravelInfoCardProps) {
           onClose={() => setOpenReturn(false)}
           onConfirm={() => {
             setReturnDate(selectedDate);
+            if (selectedDate) {
+              setGameReservationInfo({
+                ...gameReservationInfo,
+                returnDate: formatDate(selectedDate, 'yyyy-MM-dd'),
+              });
+            }
             setOpenReturn(false);
           }}
           type="date"
@@ -109,7 +183,18 @@ export default function TravelInfoCard({ travelType }: TravelInfoCardProps) {
           onClose={() => setOpenReturnTime(false)}
           onConfirm={() => setOpenReturnTime(false)}
           type="time"
-          onTimeSelect={(time) => setReturnTime(time)}
+          onTimeSelect={(time) => {
+            setReturnTime(time);
+            // 시간 정보는 returnDate에 포함되어야 하므로, 날짜와 시간을 결합
+            if (returnDate && time) {
+              const dateTimeString =
+                formatDate(returnDate, 'yyyy-MM-dd') + 'T' + time;
+              setGameReservationInfo({
+                ...gameReservationInfo,
+                returnDate: dateTimeString,
+              });
+            }
+          }}
         />
       )}
     </section>
