@@ -25,7 +25,7 @@ export default function DateTimePicker({
   return (
     <div className="flex gap-2 mt-6">
       <div className="w-full flex flex-col gap-3">
-        <p className="title2 text-grey7">{label} 날</p>
+        {label !== '수령' && <p className="title2 text-grey7">{label} 날</p>}
         <div
           className="w-full py-5 px-4 rounded-[12px] border-[1px] title2 cursor-pointer border-grey3 flex items-center gap-1"
           onClick={onDateClick}
@@ -37,7 +37,7 @@ export default function DateTimePicker({
         </div>
       </div>
       <div className="w-full flex flex-col gap-3">
-        <p className="title2 text-white">{label} 시간</p>
+        {label !== '수령' && <p className="title2 text-white">{label} 시간</p>}
         <div
           className="w-full py-5 px-4 rounded-[12px] border-[1px] title2 cursor-pointer border-grey3 flex items-center gap-1"
           onClick={onTimeClick}
