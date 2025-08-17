@@ -2,6 +2,7 @@ import InfoCard from '@components/all/InfoCard';
 import React, { useState, useRef, useEffect } from 'react';
 import DropboxCheckSVG from '@public/svg/reservation/dropboxCheck.svg';
 import DropboxStrokeSVG from '@public/svg/reservation/dropboxStroke.svg';
+import { useGameReservationStore } from '@store/makeReservationInfo';
 const PEOPLE_OPTIONS = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
   23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
@@ -19,6 +20,14 @@ export default function ResPeopleCountDropboxCard({
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(2);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const inputGameResValue = useGameReservationStore(
+    (state) => state.gameReservationInfo
+  );
+
+  const setAdultGameResCount = useGameReservationStore(
+    (state) => state.setGameReservationInfo
+  );
 
   // 바깥 클릭 시 닫기
   useEffect(() => {
@@ -64,6 +73,7 @@ export default function ResPeopleCountDropboxCard({
                   `}
                   onClick={() => {
                     setSelected(num);
+                    setAdultGameResCount({ ...inputGameResValue, adultCount: num });
                     setIsOpen(false);
                   }}
                 >
