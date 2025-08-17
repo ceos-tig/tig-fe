@@ -22,6 +22,7 @@ export default function MakeResButtonCard({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const gameType = pathname.split('/').at(-2);
   const clubId = pathname.split('/').at(-1);
   const [toastId, setToastId] = useState<string | null>(null);
   const price = usePriceStore((state) => state.price);
@@ -59,8 +60,19 @@ export default function MakeResButtonCard({
   const curPrice = usePriceStore((state) => state.price);
 
   const handleReservation = () => {
-    // 그냥 GAME으로 통일
-    if (
+    // 업체가 들어옴에 따라 게임별로 분류
+    console.log(gameResInfo.endDate);
+    if (gameType === 'PENSION') {
+      if (!clubId ||
+        !gameResInfo.date ||
+        !gameResInfo.endDate ||
+        // curPrice === 0 펜션은 가격이 0원이어도 예약 가능(임시)
+        gameResInfo.adultCount === 0) {
+        handleWrongSubmit('GAME');
+        return;
+      }
+    }
+    else if (
       !clubId ||
       !gameResInfo.startTime ||
       curPrice === 0 ||
@@ -69,15 +81,18 @@ export default function MakeResButtonCard({
       handleWrongSubmit('GAME');
       return; // clubId가 undefined, null, ''과 같은 경우
     }
+
     const calculateDate = convertToNextDayIfNextDay(
       gameResInfo.startTime?.slice(11, 16) || '',
       clubStartTime,
-      gameResInfo.startTime
+      gameResInfo.startTime || ''
     );
 
     const query = {
-      gameType: 'GAME',
+      gameType: gameType,
       date: gameResInfo.date,
+      // 펜션용
+      endDate: gameResInfo.endDate || '',
       startTime: calculateDate,
       gameCount: String(gameResInfo.gameCount),
       request: gameResInfo.request,
@@ -98,7 +113,7 @@ export default function MakeResButtonCard({
 
   useEffect(() => {
     clearPrice();
-  },[]);
+  }, []);
 
   return (
     <section className="h-[78px] w-full flex  gap-[10px] justify-center items-center px-5 py-[14px] absolute bottom-0 bg-white shadow-absoluteButton">

@@ -15,6 +15,8 @@ interface BeforeFirstStageCardProps {
   gameCount?: number;
   price: number;
   gameDescription: string;
+  gameType: string;
+  endDate: string;
 }
 
 export default function BeforeFirstStageCard({
@@ -29,6 +31,8 @@ export default function BeforeFirstStageCard({
   gameCount,
   price,
   gameDescription,
+  gameType,
+  endDate,
 }: BeforeFirstStageCardProps) {
   return (
     <section className="w-eightNineWidth h-fit rounded-[10px] flex justify-center bg-white mt-[30px] py-5">
@@ -41,10 +45,12 @@ export default function BeforeFirstStageCard({
         <div className="w-full flex justify-between items-center">
           <span className="title4 text-grey4">날짜</span>
           <span className="body4 text-grey6">
-            {formatReservationShowingDate(startTime)}
+            {gameType === 'PENSION'
+              ? formatReservationShowingDate(date) + ' - ' + formatReservationShowingDate(endDate)
+              : formatReservationShowingDate(startTime)}
           </span>
         </div>
-        <div className="w-full flex justify-between items-center">
+        {gameType !== 'PENSION' && <div className="w-full flex justify-between items-center">
           <span className="title4 text-grey4">시작 시간</span>
           <span className="body4 text-grey6">
             {/* {parseInt(extractOnlyTime(startTime).slice(0, 2)) <= 12
@@ -54,17 +60,26 @@ export default function BeforeFirstStageCard({
             {/* {endTime === '' ? '시작' : '- '} */}
             {/* {endTime ? extractOnlyTime(endTime) : null} */}
           </span>
-        </div>
+        </div>}
         <div className="w-full flex justify-between items-center">
           <span className="title4 text-grey4">인원</span>
           <span className="body4 text-grey6">
             {adultCount !== 0 && `${adultCount}명`}
           </span>
         </div>
-        <div className="w-full flex justify-between items-center">
-          <span className="title4 text-grey4">게임</span>
-          <span className="body4 text-grey6">{gameDescription}</span>
-        </div>
+        {gameType !== 'PENSION' && <div className="w-full flex justify-between items-center">
+          {gameType === 'GOLF_COURSE' ? (
+            <>
+              <span className="title4 text-grey4">옵션</span>
+              <span className="body4 text-grey6">{gameDescription}</span>
+            </>
+          ) : (
+            <>
+              <span className="title4 text-grey4">게임</span>
+              <span className="body4 text-grey6">{gameDescription}</span>
+            </>
+          )}
+        </div>}
         {endTime === '' && gameCount !== 0 && (
           <div className="w-full flex justify-between items-center">
             <span className="title4 text-grey4">게임수</span>
