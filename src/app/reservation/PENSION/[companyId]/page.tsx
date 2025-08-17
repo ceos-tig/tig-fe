@@ -16,7 +16,7 @@ import {
 } from '@apis/reservation/getClubResInfo';
 import { Toaster } from 'react-hot-toast';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { addHours, formatDate } from 'date-fns';
+import { addDays, addHours, formatDate } from 'date-fns';
 import { timeToMinutes } from '@utils/formatDate';
 import { useSelectedDate } from '@store/selectedDateStore';
 import useTab from '@store/tabNumberStore';
@@ -68,9 +68,16 @@ export default function Page({ params }: { params: { companyId: string } }) {
       );
       setClubName(data?.result.clubName || '');
       setAddress(data?.result.address || '');
+      const selectedDate = searchParam.get('date') || '';
+      const endDate = selectedDate
+        ? formatDate(addDays(new Date(selectedDate), 1), 'yyyy-MM-dd')
+        : '';
+
       setGameReservationInfo({
         ...gameReservationInfo,
-        date: searchParam.get('date') || '',
+        date: selectedDate,
+        endDate: endDate,
+        adultCount: 2,
       });
       setSelectedDate(searchParam.get('date') || '');
       // API 수정되면 gameType에 맞게 초기화
