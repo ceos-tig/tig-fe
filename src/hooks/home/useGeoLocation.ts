@@ -46,10 +46,9 @@ export const useGeolocation = (isLogin: boolean) => {
       };
     }, [homeData]);
 
-
-    // 일단 패키지도 그대로 근처 스포츠를 받도록 했는데, 구축된 이후로는 다른 API를 호출받아야 함
+  // 패키지 탭일 때는 클럽 데이터를 사용하지 않음
   const clubCards = useMemo(() => {
-    if (['홈', '문화', '스포츠', '패키지'].includes(selectedTab)) {
+    if (['홈', '문화', '스포츠'].includes(selectedTab)) {
       return originalClubCards;
     }
     return nearestClubsByCategory[categoryMapKorToEng[selectedTab]] ?? [];

@@ -34,7 +34,10 @@ import UnfillPensionSVG from '@public/svg/UITabs/unfillPension.svg';
 import UnfillBusSVG from '@public/svg/UITabs/unfillBus.svg';
 import UnfillOutletCafeSVG from '@public/svg/UITabs/unfillOutletCafe.svg';
 import { usePathname, useRouter } from 'next/navigation';
-import { categoryMapKorToEng } from '@constant/constant';
+import {
+  categoryMapKorToEng,
+  packageArrayMapKorToEng,
+} from '@constant/constant';
 
 interface TabProps {
   defaultName: string;
@@ -50,7 +53,11 @@ export default function UITab({ name, defaultName, className }: TabProps) {
 
   const HandleClick = () => {
     if (pathname.startsWith('/home')) {
-      router.push(`/home/${categoryMapKorToEng[name]}`);
+      if (Object.keys(categoryMapKorToEng).includes(name)) {
+        router.push(`/home/${categoryMapKorToEng[name]}`);
+      } else {
+        router.push(`/home/${packageArrayMapKorToEng[name]}`);
+      }
     } else setCurrentTab(name);
   };
 

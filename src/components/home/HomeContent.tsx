@@ -4,7 +4,9 @@ import Tabs from '@components/all/Tabs/Tabs';
 import { mainArray } from '@constant/constant';
 import SearchHeader from '@components/all/SearchHeader';
 import HomeCardList from '@components/home/HomeCardList';
+import PackageCardList from '@components/home/PackageCardList';
 import useGeolocation from '@hooks/home/useGeoLocation';
+import usePackageLocation from '@hooks/home/usePackageLocation';
 import Footer from '@components/all/Footer/Footer';
 import { useScroll } from '@hooks/useScroll';
 import useTab from '@store/tabNumberStore';
@@ -43,6 +45,7 @@ export default function HomeContent({
 }) {
   const MAINARRAY = mainArray;
   const { clubCards, recommendClubCards } = useGeolocation(isLogin);
+  const { packageCards, recommendPackageCards } = usePackageLocation(isLogin);
   const { isVisible } = useScroll();
   const currentTab = useTab((state) => state.selectedTab);
 
@@ -72,8 +75,10 @@ export default function HomeContent({
       )}
       {currentTab === '패키지' && (
         <>
-          <HomeCardList title="이런 곳은 어때요?" Card={clubCards} />
-          <HomeCardList title="추천하는 서비스에요" Card={recommendClubCards} />
+          <PackageCardList
+            title="추천하는 서비스에요"
+            Card={recommendPackageCards}
+          />
         </>
       )}
       <Footer />
