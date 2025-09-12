@@ -6,6 +6,7 @@ import FilterHeader from '@components/search/result/FilterHeader';
 import NaverMap from '@components/search/result/NaverMap';
 import NoSearchResult from '@components/search/result/NoSearchResult';
 import PinCard from '@components/search/result/PinCard';
+import ResultCard from '@components/all/ResultCard';
 import {
   allleisureArray,
   allpackageArray,
@@ -39,7 +40,10 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
   const { search, date, time, isKeyword, from } = Object.fromEntries(
     searchParams.entries()
   );
-  const tabArray = from === 'sports' ? allleisureArray : allpackageArray;
+  const tabArray =
+    from === 'sports'
+      ? allleisureArray
+      : allpackageArray.filter((t) => t !== '전체');
   const parsedDate = parse(date, "yyyy-MM-dd'T'HH:mm:ss", new Date());
   const formattedDate = formatDate(parsedDate, 'M.dd (EEE)', { locale: ko });
   const formatDayOfWeek = formatDate(parsedDate, 'EEE').toUpperCase();
@@ -51,7 +55,14 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
     isBottomSheetOpen,
     isResult,
     recommendedResult,
-  } = useSearchResult(search, isKeyword, formatDayOfWeek, isLogin);
+  } = useSearchResult(
+    search,
+    isKeyword,
+    formatDayOfWeek,
+    isLogin,
+    (from as 'sports' | 'package') || 'sports'
+  );
+  console.log('isResult', isResult);
   const [isCurrentLocationUIClicked, setIsCurrentLocationUIClicked] =
     useState<boolean>(false);
 
@@ -60,7 +71,7 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
   };
 
   return (
-    <main className="w-full h-full flex justify-center items-center text-[200px]">
+    <main className="w-full h-[100dvh] flex flex-col overflow-hidden">
       <SearchHeader
         result
         placeholder={`${decodeURIComponent(search)}, ${formattedDate}`}
@@ -72,7 +83,7 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
         className="w-full px-5 top-[58px]"
       />
       <FilterHeader />
-      {isResult && (
+      {from === 'sports' && isResult && (
         <NaverMap
           locationArray={filteredSearchResult.map((result) => ({
             latitude: result.latitude || 0,
@@ -84,7 +95,7 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
           isCurrentLocationUIClicked={isCurrentLocationUIClicked}
         />
       )}
-      {isResult && isBottomSheetOpen && (
+      {from === 'sports' && isResult && isBottomSheetOpen && (
         <BottomSheet
           from={from}
           results={filteredSearchResult}
@@ -95,7 +106,7 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
           }
         />
       )}
-      {!isBottomSheetOpen && (
+      {from === 'sports' && !isBottomSheetOpen && (
         <PinCard
           PinCard={filteredSearchResult[pinCardIndex]}
           handleMyLocation={handleMyLocation}
@@ -104,6 +115,13 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
             handleClickCurrentLocationUIButton
           }
         />
+      )}
+      {from === 'package' && isResult && (
+        <div className="w-full flex-1 overflow-y-auto pt-[200px]">
+          {filteredSearchResult.map((item, idx) => (
+            <ResultCard key={`${item.clubId}-${idx}`} {...item} />
+          ))}
+        </div>
       )}
       {!isResult && <NoSearchResult results={recommendedResult} />}
     </main>
