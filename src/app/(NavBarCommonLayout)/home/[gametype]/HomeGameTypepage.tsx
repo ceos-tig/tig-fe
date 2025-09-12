@@ -49,7 +49,7 @@ export default function HomeGameTypepage({
   }, []);
 
   return (
-    <main className="w-full flex flex-col pb-[40px] shadow-mainShadow">
+    <main className="w-full flex flex-col pb-[40px] shadow-mainShadow min-h-[100dvh]">
       <SearchHeader isHomeOrResultPage className="sticky" />
       {isShowBounce && (
         <div className="fixed left-[calc(50%-240px+72px)] top-[58px] z-[400] flex flex-col w-fit animate-bounce">
