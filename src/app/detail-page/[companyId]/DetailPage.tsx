@@ -67,11 +67,16 @@ const initialInofo: clubInfoProps = {
 export default function DetailPage({
   params,
   info,
+  from = 'sports',
 }: {
   params: { companyId: string };
   info: clubInfoProps;
+  from?: 'sports' | 'package';
 }) {
   const { data: reviewList } = useGetAllClubReview(params.companyId);
+  // package는 리뷰API가 없어 임시 분기처리
+  const mockReviewData = { result: { reviews: [], reviewSummary: null } };
+  const finalReviewData = from === 'sports' ? reviewList : mockReviewData;
   const detailtabArrayWhenNoReview = detailArrayWhenNoReview;
   const detailtabArrayWhenReview = detailArrayWhenReview;
   // const detailInfoRef = useRef<HTMLDivElement>(null);
@@ -191,14 +196,16 @@ export default function DetailPage({
         scroll.removeEventListener('scroll', debouncedChangeNavBtn);
       }
     };
-  }, [mainRef.current]);
+  }, [setSelectedTab]);
 
   return (
     <div className="w-full h-full overflow-y-scroll" ref={mainRef}>
       <Header buttonType="back" title={info.clubName} />
       <Tabs
         tabArray={
-          reviewList.result.reviews.length === 0
+          from === 'package'
+            ? detailtabArrayWhenNoReview
+            : finalReviewData.result.reviews.length === 0
             ? detailtabArrayWhenNoReview
             : detailtabArrayWhenReview
         }
@@ -266,13 +273,15 @@ export default function DetailPage({
           scrollRef.current[2] = element;
         }}
       />
-      <VisitedReviewCard
-        avgRating={info.avgRating}
-        ratingCount={info.ratingCount}
-        reviewList={reviewList.result.reviews}
-        reviewSummary={reviewList.result.reviewSummary}
-        // ref={visitedReviewRef}
-      />
+      {from === 'sports' && (
+        <VisitedReviewCard
+          avgRating={info.avgRating}
+          ratingCount={info.ratingCount}
+          reviewList={finalReviewData.result.reviews}
+          reviewSummary={finalReviewData.result.reviewSummary || ''}
+          // ref={visitedReviewRef}
+        />
+      )}
       <ResButtonCard
         category={info.category}
         companyId={params.companyId}
