@@ -33,6 +33,8 @@ export default function ResultCard({
   imageUrls = [],
   isLast = false,
   isFirst = false,
+  name,
+  id,
 }: ResultCardProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -77,14 +79,14 @@ export default function ResultCard({
       onClick={() => {
         if (pathname.startsWith('/home') || pathname.startsWith('/wishlist')) {
           router.push(
-            `/detail-page/${clubId}?date=${formatDate(
+            `/detail-page/${clubId || id}?date=${formatDate(
               new Date(),
               "yyyy-MM-dd'T'HH:mm:ss"
             )}`
           );
         } else {
           router.push(
-            `/detail-page/${clubId}?date=${searchParams.get('date')}`
+            `/detail-page/${clubId || id}?date=${searchParams.get('date')}`
           );
         }
       }}
@@ -131,7 +133,7 @@ export default function ResultCard({
       <div className="w-full flex flex-col justify-between h-full">
         <div className="w-full h-fit flex flex-col gap-[10px]">
           <div className="w-full flex flex-col gap-1">
-            <p className="title3 text-grey7">{clubName}</p>
+            <p className="title3 text-grey7">{clubName || name}</p>
             <p className="w-full body4 text-grey5 line-clamp-1">{address}</p>
           </div>
           {ratingCount !== 0 && (
