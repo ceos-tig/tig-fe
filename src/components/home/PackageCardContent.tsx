@@ -14,7 +14,7 @@ const PackageResultCard = ({ packageItem }: { packageItem: Package }) => {
       href={`/detail-page/${packageItem.id}?date=${formatDate(
         new Date(),
         "yyyy-MM-dd'T'HH:mm:ss"
-      )}&type=package&category=${packageItem.category}`}
+      )}&from=package`}
       className={cn(
         'w-full h-[168px] flex gap-4 p-5 border-b border-grey2 max-w-[480px] min-w-[360px] cursor-pointer bg-white'
       )}

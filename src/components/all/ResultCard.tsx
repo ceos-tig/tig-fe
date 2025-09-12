@@ -35,6 +35,7 @@ export default function ResultCard({
   isFirst = false,
   name,
   id,
+  from = 'sports',
 }: ResultCardProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -82,11 +83,11 @@ export default function ResultCard({
             `/detail-page/${clubId || id}?date=${formatDate(
               new Date(),
               "yyyy-MM-dd'T'HH:mm:ss"
-            )}`
+            )}&from=${from}`
           );
         } else {
           router.push(
-            `/detail-page/${clubId || id}?date=${searchParams.get('date')}`
+            `/detail-page/${clubId || id}?date=${searchParams.get('date')}&from=${from}`
           );
         }
       }}

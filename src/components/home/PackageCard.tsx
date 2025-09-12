@@ -27,7 +27,7 @@ export default function PackageCard({
       href={`/detail-page/${id}?date=${formatDate(
         new Date(),
         "yyyy-MM-dd'T'HH:mm:ss"
-      )}&type=package&category=${category}`}
+      )}&from=package`}
     >
       <div className="relative w-[152px] h-[152px] rounded-[10px] overflow-hidden">
         <Image

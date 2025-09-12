@@ -119,11 +119,11 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
       {from === 'package' && isResult && (
         <div className="w-full flex-1 overflow-y-auto pt-[200px]">
           {filteredSearchResult.map((item, idx) => (
-            <ResultCard key={`${item.clubId}-${idx}`} {...item} />
+            <ResultCard key={`${item.clubId}-${idx}`} {...item} from={from} />
           ))}
         </div>
       )}
-      {!isResult && <NoSearchResult results={recommendedResult} />}
+      {!isResult && <NoSearchResult results={recommendedResult} from={from as 'sports' | 'package'} />}
     </main>
   );
 }

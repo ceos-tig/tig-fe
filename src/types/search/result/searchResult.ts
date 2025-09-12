@@ -35,4 +35,5 @@ export interface ResultCardProps {
   operatingHours?: operatingHour[];
   name?: string;
   id?: number;
+  from?: 'sports' | 'package';
 }
