@@ -28,6 +28,7 @@ import { cn } from '@utils/cn';
 import { AnimatePresence, motion } from 'framer-motion';
 import { set } from 'date-fns';
 import { clubInfoProps } from 'types/all/ClubInfoTypes';
+import { useGetAllPackageReview } from '@apis/detail-page/getAllPackageReview';
 
 const servicesIcon = ['wifi', 'wifi', 'wifi', 'wifi'];
 const services = ['무선 인터넷', '무선 인터넷', '무선 인터넷', '무선 인터넷'];
@@ -73,10 +74,12 @@ export default function DetailPage({
   info: clubInfoProps;
   from?: 'sports' | 'package';
 }) {
-  const { data: reviewList } = useGetAllClubReview(params.companyId);
+  const { data: clubReviewList } = useGetAllClubReview(params.companyId);
+  // TODO: 리뷰가 제대로 오고있지 않음
+  const { data: packageReviewList } = useGetAllPackageReview(params.companyId);
   // package는 리뷰API가 없어 임시 분기처리
-  const mockReviewData = { result: { reviews: [], reviewSummary: null } };
-  const finalReviewData = from === 'sports' ? reviewList : mockReviewData;
+  const finalReviewData =
+    from === 'sports' ? clubReviewList : packageReviewList;
   const detailtabArrayWhenNoReview = detailArrayWhenNoReview;
   const detailtabArrayWhenReview = detailArrayWhenReview;
   // const detailInfoRef = useRef<HTMLDivElement>(null);
