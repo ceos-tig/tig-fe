@@ -15,12 +15,18 @@ const PEOPLE_OPTIONS = [
 
 export default function ResPeopleCountDropboxCard({
   number = 2,
+  from = 'OTHER',
+  price = 10000,
 }: {
   number?: number;
+  from?: 'LUNCH_BOX' | 'OTHER';
+  price?: number;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(2);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const setPrice = usePriceStore((state) => state.setPrice);
+  const pushPrice = usePriceStore((state) => state.pushPrice);
   const setAdultCount = useGameReservationStore(
     (state) => state.setGameReservationInfo
   );
@@ -50,7 +56,12 @@ export default function ResPeopleCountDropboxCard({
 
   useEffect(() => {
     setAdultCount({ ...inputGameResValue, adultCount: selected });
-  }, [selected]);
+    if (from === 'LUNCH_BOX' && typeof price === 'number' && price > 0) {
+      setPrice(selected * price);
+      pushPrice({ name: 'LUNCH_BOX', price: selected * price });
+
+    }
+  }, [selected, price]);
 
   return (
     <section className="w-full flex flex-col p-5 mt-5 border-b border-grey2">
@@ -84,6 +95,10 @@ export default function ResPeopleCountDropboxCard({
                     setSelected(num);
                     setAdultCount({ ...inputGameResValue, adultCount: num });
                     clearPrice();
+                    if (from === 'LUNCH_BOX') {
+                      setPrice(num * price);
+                      pushPrice({ name: 'LUNCH_BOX', price: num * price });
+                    }
                     setAdultGameResCount({
                       ...inputGameResValue,
                       adultCount: num,
