@@ -36,4 +36,5 @@ export interface ResultCardProps {
   name?: string;
   id?: number;
   from?: 'sports' | 'package';
+  price?: string;
 }

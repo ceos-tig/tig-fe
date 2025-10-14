@@ -122,15 +122,18 @@ export const useSearchResult = (
         : Number.POSITIVE_INFINITY; // 가까운순에서 거리 없음은 가장 뒤로
     const getMinPrice = (item: ResultCardProps) => {
       try {
-        const priceList = Array.isArray(item.prices)
-          ? (item.prices as any[])
-          : [];
-        if (priceList.length === 0) return Number.POSITIVE_INFINITY;
-        const candidates = priceList
-          .map((obj: any) => Number(obj?.price))
-          .filter((v) => Number.isFinite(v));
-        if (candidates.length === 0) return Number.POSITIVE_INFINITY;
-        return Math.min(...candidates);
+        if (from === 'package') {
+          const price = Number(item.price);
+          return Number.isFinite(price) ? price : Number.POSITIVE_INFINITY;
+        } else {
+          const priceList = Array.isArray(item.prices) ? (item.prices as any[]) : [];
+          if (priceList.length === 0) return Number.POSITIVE_INFINITY;
+          const candidates = priceList
+            .map((obj: any) => Number(obj?.price))
+            .filter((v) => Number.isFinite(v));
+          if (candidates.length === 0) return Number.POSITIVE_INFINITY;
+          return Math.min(...candidates);
+        }
       } catch (_) {
         return Number.POSITIVE_INFINITY;
       }
@@ -143,6 +146,17 @@ export const useSearchResult = (
         );
       }
     }
+    console.log(result);
+
+    // TODO: 패키지 탭일 때 필터링 추가, 백엔드 로직 수정 후 반영
+    // if (from === 'package') {
+    //   if (selectedTab !== '전체') {
+    //     result = result.filter(
+    //       (item) => categoryMapEngToKor[item.category] === selectedTab
+    //     );
+    //   }
+    //   console.log(result);
+    // }
 
     if (selectedOption === '추천순') {
       setFilteredSearchResult(result);

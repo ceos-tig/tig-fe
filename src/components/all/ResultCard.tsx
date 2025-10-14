@@ -36,6 +36,7 @@ export default function ResultCard({
   name,
   id,
   from = 'sports',
+  price,
 }: ResultCardProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -94,7 +95,7 @@ export default function ResultCard({
       className={cn(
         'w-full h-[168px] flex gap-4 p-5 border-b border-grey2 max-w-[480px] min-w-[360px] cursor-pointer bg-white',
         {
-          // 'pb-[60px] h-fit': isLast,
+          'mb-[60px]': isLast,
           // 'pt-[0] h-fit': isFirst,
         }
       )}
@@ -151,7 +152,8 @@ export default function ResultCard({
         </div>
         <div className="flex flex-col gap-1">
           <p className="headline2 text-grey7">
-            {prices &&
+            {from === 'package' && Number(price).toLocaleString()}
+            {from === 'sports' && prices &&
               Math.min(
                 ...(prices as any[]).map((obj) => obj.price)
               ).toLocaleString()}

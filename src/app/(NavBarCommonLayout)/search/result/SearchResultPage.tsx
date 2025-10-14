@@ -62,7 +62,6 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
     isLogin,
     (from as 'sports' | 'package') || 'sports'
   );
-  console.log('isResult', isResult);
   const [isCurrentLocationUIClicked, setIsCurrentLocationUIClicked] =
     useState<boolean>(false);
 
@@ -74,7 +73,7 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
     <main className="w-full h-[100dvh] flex flex-col overflow-hidden">
       <SearchHeader
         result
-        placeholder={`${decodeURIComponent(search)}, ${formattedDate}`}
+        placeholder={from === 'sports' ? `${decodeURIComponent(search)}, ${formattedDate}` : `${formattedDate}`}
         isHomeOrResultPage
       />
       <UITabs
@@ -118,9 +117,10 @@ export default function SearchResultPage({ isLogin }: { isLogin: boolean }) {
       )}
       {from === 'package' && isResult && (
         <div className="w-full flex-1 overflow-y-auto pt-[200px]">
-          {filteredSearchResult.map((item, idx) => (
-            <ResultCard key={`${item.clubId}-${idx}`} {...item} from={from} />
-          ))}
+          {filteredSearchResult.map((item, idx) => {
+            if(idx===filteredSearchResult.length-1) return <ResultCard key={`${item.clubId}-${idx}`} {...item} from={from} isLast={true} />
+            return <ResultCard key={`${item.clubId}-${idx}`} {...item} from={from} />
+          })}
         </div>
       )}
       {!isResult && <NoSearchResult results={recommendedResult} from={from as 'sports' | 'package'} />}
