@@ -22,11 +22,16 @@ import {
 } from '@store/makeReservationInfo';
 import { useSelectedDate } from '@store/selectedDateStore';
 import CalendarSVG from '@public/svg/reservation/calendar.svg';
+import { usePriceStore } from '@store/priceStore';
 const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
-export default function PeriodCalendar() {
+export default function PeriodCalendar({ price }: { price: number }) {
   const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
   const selectedDate = useSelectedDate((state) => state.selectedDate);
+  const adultCount = useGameReservationStore(
+    (state) => state.gameReservationInfo.adultCount
+  );
+  const setPrice = usePriceStore((state) => state.setPrice);
   const [startDate, setStartDate] = useState<Date | null>(
     selectedDate ? new Date(selectedDate) : null
   );
@@ -54,6 +59,19 @@ export default function PeriodCalendar() {
   const setSearchInputInfo = useSearchInputInfo(
     (state) => state.setSearchInput
   );
+
+  // 선택된 기간, 인원수, 가격이 모두 유효할 때 총 금액 계산
+  useEffect(() => {
+    if (startDate && endDate && adultCount && price) {
+      const msPerDay = 24 * 60 * 60 * 1000;
+      const dayCount = Math.max(
+        0,
+        Math.round((endDate.getTime() - startDate.getTime()) / msPerDay)
+      );
+      const total = dayCount * adultCount * price;
+      setPrice(total);
+    }
+  }, [startDate, endDate, adultCount, price, setPrice]);
 
   const handleNextMonthButtonClick = () => {
     setCalendarMonth(addMonths(calendarMonth, 1));

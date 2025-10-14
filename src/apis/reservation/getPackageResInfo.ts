@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 interface Result {
   packageName: string;
   address: string;
-  prices: PackagePriceItem;
+  prices: PackagePriceItem[];
   category:
     | 'GOLF_COURSE'
     | 'CATERING'
