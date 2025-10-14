@@ -22,6 +22,7 @@ export default function GameCountCard({
   const gameResInfo = useGameReservationStore(
     (state) => state.gameReservationInfo
   );
+  console.log(gameResInfo);
   const setGameResInfo = useGameReservationStore(
     (state) => state.setGameReservationInfo
   );

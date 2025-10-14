@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import DropboxCheckSVG from '@public/svg/reservation/dropboxCheck.svg';
 import DropboxStrokeSVG from '@public/svg/reservation/dropboxStroke.svg';
 import { useGameReservationStore } from '@store/makeReservationInfo';
+import { usePriceStore } from '@store/priceStore';
 const PEOPLE_OPTIONS = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
   23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
@@ -20,6 +21,10 @@ export default function ResPeopleCountDropboxCard({
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(2);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const setAdultCount = useGameReservationStore(
+    (state) => state.setGameReservationInfo
+  );
+  const clearPrice = usePriceStore((state) => state.clearPriceStack);
 
   const inputGameResValue = useGameReservationStore(
     (state) => state.gameReservationInfo
@@ -42,6 +47,10 @@ export default function ResPeopleCountDropboxCard({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    setAdultCount({ ...inputGameResValue, adultCount: selected });
+  }, [selected]);
 
   return (
     <section className="w-full flex flex-col p-5 mt-5 border-b border-grey2">
@@ -73,7 +82,12 @@ export default function ResPeopleCountDropboxCard({
                   `}
                   onClick={() => {
                     setSelected(num);
-                    setAdultGameResCount({ ...inputGameResValue, adultCount: num });
+                    setAdultCount({ ...inputGameResValue, adultCount: num });
+                    clearPrice();
+                    setAdultGameResCount({
+                      ...inputGameResValue,
+                      adultCount: num,
+                    });
                     setIsOpen(false);
                   }}
                 >
