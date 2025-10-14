@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-interface PackagePriceItem {
+export interface PackagePriceItem {
   id: number;
   optionType: string;
   optionValue: string;

@@ -15,10 +15,12 @@ export default function MakeResButtonCard({
   clubName,
   address,
   clubStartTime,
+  from = 'sports',
 }: {
   clubName: string;
   address: string;
   clubStartTime: string;
+  from?: 'sports' | 'package';
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -62,63 +64,64 @@ export default function MakeResButtonCard({
   const handleReservation = () => {
     // 업체가 들어옴에 따라 게임별로 분류
     if (gameType === 'PENSION') {
-      if (!clubId ||
+      if (
+        !clubId ||
         !gameResInfo.date ||
         !gameResInfo.endDate ||
         // curPrice === 0 펜션은 가격이 0원이어도 예약 가능(임시)
-        gameResInfo.adultCount === 0) {
+        gameResInfo.adultCount === 0
+      ) {
         handleWrongSubmit('GAME');
         return;
       }
-    }
-    else if (gameType === 'BUS') {
-      if (!clubId ||
+    } else if (gameType === 'BUS') {
+      if (
+        !clubId ||
         !gameResInfo.date ||
         !gameResInfo.departureDate ||
         !gameResInfo.departurePlace ||
         !gameResInfo.returnPlace
         // curPrice === 0 버스는 가격이 0원이어도 예약 가능(임시)
-        ) {
+      ) {
         console.log(gameResInfo);
         handleWrongSubmit('GAME');
         return;
       }
-    }
-    else if (gameType === 'CATERING') {
-      if (!clubId ||
+    } else if (gameType === 'CATERING') {
+      if (
+        !clubId ||
         !gameResInfo.date ||
         !gameResInfo.receiptDate ||
         !gameResInfo.deliveryAddress
         // curPrice === 0 버스는 가격이 0원이어도 예약 가능(임시)
-        ) {
+      ) {
         console.log(gameResInfo);
         handleWrongSubmit('GAME');
         return;
       }
-    }
-    else if (gameType === 'LUNCH_BOX') {
-      if (!clubId ||
+    } else if (gameType === 'LUNCH_BOX') {
+      if (
+        !clubId ||
         !gameResInfo.date ||
         !gameResInfo.receiptDate ||
         !gameResInfo.deliveryAddress
         // curPrice === 0 버스는 가격이 0원이어도 예약 가능(임시)
-        ) {
+      ) {
         console.log(gameResInfo);
         handleWrongSubmit('GAME');
         return;
       }
-    }
-    else if (gameType === 'GROUP_UNIFORM') {
-      if (!clubId ||
+    } else if (gameType === 'GROUP_UNIFORM') {
+      if (
+        !clubId ||
         !gameResInfo.deliveryAddress
         // curPrice === 0 버스는 가격이 0원이어도 예약 가능(임시)
-        ) { 
+      ) {
         console.log(gameResInfo);
         handleWrongSubmit('GAME');
         return;
       }
-    }
-    else if (
+    } else if (
       !clubId ||
       !gameResInfo.startTime ||
       curPrice === 0 ||
@@ -149,7 +152,9 @@ export default function MakeResButtonCard({
       clubName: clubName,
       address: address,
       gameDescription:
-        gameResInfo.gameDescription + ', ' + getPriceStackLength() + '회',
+        from === 'sports'
+          ? gameResInfo.gameDescription + ', ' + getPriceStackLength() + '회'
+          : gameResInfo.gameDescription,
       message: gameResInfo.request,
       travelType: gameResInfo.travelType,
       departureDate: gameResInfo.departureDate || '',
