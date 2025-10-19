@@ -6,7 +6,7 @@ import {
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-export default function RequestCard({ number = 4 }: { number: number }) {
+export default function RequestCard({ number = 4 }: { number?: number }) {
   const [inputValue, setInputValue] = useState('');
   const [inputLength, setInputLength] = useState(0);
   const pathname = usePathname();

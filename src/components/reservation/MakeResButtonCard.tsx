@@ -138,7 +138,7 @@ export default function MakeResButtonCard({
     );
 
     const query = {
-      gameType: gameType,
+      gameType: gameType || '',
       date: gameResInfo.date,
       // 펜션용
       endDate: gameResInfo.endDate || '',
