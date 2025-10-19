@@ -2,7 +2,7 @@ import { useGetLoginUserSearchedResult } from '@apis/search/getLoginUserSearched
 import { useGetUnLoginUserSearchedResult } from '@apis/search/getUnLoginUserSearchedResult';
 import { useGetLoginUserPackageSearchedResult } from '@apis/search/getLoginUserPackageSearchedResult';
 import { useGetUnLoginUserPackageSearchedResult } from '@apis/search/getUnLoginUserPackageSearchedResult';
-import { categoryMapEngToKor } from '@constant/constant';
+import { categoryMapEngToKor, packageArrayMapEngToKor } from '@constant/constant';
 import { useBottomSheetStore } from '@store/bottomSheetStore';
 import { useFilterOptionStore } from '@store/filterOptionStore';
 import { usePinCardIndexStore } from '@store/pinCardIndexStore';
@@ -148,15 +148,14 @@ export const useSearchResult = (
     }
     console.log(result);
 
-    // TODO: 패키지 탭일 때 필터링 추가, 백엔드 로직 수정 후 반영
-    // if (from === 'package') {
-    //   if (selectedTab !== '전체') {
-    //     result = result.filter(
-    //       (item) => categoryMapEngToKor[item.category] === selectedTab
-    //     );
-    //   }
-    //   console.log(result);
-    // }
+    if (from === 'package') {
+      if (selectedTab !== '전체') {
+        result = result.filter(
+          (item) => packageArrayMapEngToKor[item.category] === selectedTab
+        );
+      }
+      console.log(result);
+    }
 
     if (selectedOption === '추천순') {
       setFilteredSearchResult(result);
