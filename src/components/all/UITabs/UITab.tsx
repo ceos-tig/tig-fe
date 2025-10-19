@@ -29,7 +29,7 @@ import UnfillTabletennisSVG from '@public/svg/UITabs/unfilltableTennis.svg';
 import UnfillTennisSVG from '@public/svg/UITabs/unfillTennis.svg';
 import UnfillLunchBoxSVG from '@public/svg/UITabs/unfillLunchBox.svg';
 import UnfillGroupUniformSVG from '@public/svg/UITabs/unfillGroupUniform.svg';
-import UnfillGolfCourseSVG from '@public/svg/UITabs/unfillGolfCourse.svg';
+import UnfillGolfCourseSVG from '@public/svg/UITabs/unfillgolfCourse.svg';
 import UnfillPensionSVG from '@public/svg/UITabs/unfillPension.svg';
 import UnfillBusSVG from '@public/svg/UITabs/unfillBus.svg';
 import UnfillOutletCafeSVG from '@public/svg/UITabs/unfillOutletCafe.svg';
