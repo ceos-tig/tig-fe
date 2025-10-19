@@ -19,8 +19,13 @@ export interface packageReviewInfoProps {
   createdAt: string; // ISO datetime string
 }
 
+export interface reviewInfoProps {
+  reviews: packageReviewInfoProps[];
+  reviewSummary: string;
+}
+
 interface getAllPackageReviewResponse {
-  result: packageReviewInfoProps;
+  result: reviewInfoProps;
   resultCode: number;
   resultMsg: string;
 }
@@ -28,7 +33,7 @@ interface getAllPackageReviewResponse {
 export const getAllPackageReview = async (
   clubId: string
 ): Promise<getAllPackageReviewResponse> => {
-  return instance.get(`/api/v1/review/package-set/${clubId}`);
+  return instance.get(`/api/v1/review/package-set/package/${clubId}`);
 };
 
 export const useGetAllPackageReview = (clubId: string) => {

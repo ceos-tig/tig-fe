@@ -75,7 +75,6 @@ export default function DetailPage({
   from?: 'sports' | 'package';
 }) {
   const { data: clubReviewList } = useGetAllClubReview(params.companyId);
-  // TODO: 리뷰가 제대로 오고있지 않음
   const { data: packageReviewList } = useGetAllPackageReview(params.companyId);
   // package는 리뷰API가 없어 임시 분기처리
   const finalReviewData =
@@ -276,15 +275,21 @@ export default function DetailPage({
           scrollRef.current[2] = element;
         }}
       />
-      {from === 'sports' && (
         <VisitedReviewCard
           avgRating={info.avgRating}
           ratingCount={info.ratingCount}
-          reviewList={finalReviewData.result.reviews}
+          reviewList={finalReviewData.result.reviews.map(review => ({
+            rating: review.rating,
+            contents: review.contents,
+            userName: review.userName,
+            adultCount: 'adultCount' in review ? review.adultCount : 0,
+            teenagerCount: 'teenagerCount' in review ? review.teenagerCount : 0,
+            kidsCount: 'kidsCount' in review ? review.kidsCount : 0,
+            startTime: 'startTime' in review ? review.startTime : '',
+          }))}
           reviewSummary={finalReviewData.result.reviewSummary || ''}
           // ref={visitedReviewRef}
         />
-      )}
       <ResButtonCard
         category={info.category}
         companyId={params.companyId}
