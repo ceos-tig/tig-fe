@@ -1,3 +1,4 @@
+'use client';
 import Footer from '@components/all/Footer/Footer';
 import { Package } from 'types/response/response';
 import Image from 'next/image';
@@ -6,8 +7,8 @@ import { formatDate } from 'date-fns';
 import { cn } from '@utils/cn';
 import { packageArrayMapEngToKor } from '@constant/constant';
 import { usePackageCards } from '@hooks/home/usePackageCards';
+import StarSVG from '@public/svg/star.svg';
 
-// 패키지용 ResultCard 컴포넌트
 const PackageResultCard = ({ packageItem }: { packageItem: Package }) => {
   return (
     <Link
@@ -33,27 +34,36 @@ const PackageResultCard = ({ packageItem }: { packageItem: Package }) => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-2 flex-1 min-w-0">
-        <div className="flex items-center gap-2">
-          <h3 className="title3 text-grey8 truncate">{packageItem.name}</h3>
-          <span className="body4 text-grey5 shrink-0">
-            {packageArrayMapEngToKor[packageItem.category]}
-          </span>
+      <div className="w-full flex flex-col justify-between h-full">
+        <div className="w-full h-fit flex flex-col gap-[10px]">
+          <div className="w-full flex flex-col gap-1">
+            <p className="title3 text-grey7 truncate">{packageItem.name}</p>
+            <p className="w-full body4 text-grey5 line-clamp-1">
+              {packageItem.address}
+            </p>
+          </div>
+          {packageItem.ratingCount !== 0 && (
+            <div className="flex gap-[6px] h-[25px]">
+              <p className="bg-primary_orange2 text-primary_orange1 title4 gap-[2px] w-[44px] h-[25px] flex justify-center items-center rounded-[4px]">
+                <StarSVG />
+                {packageItem.avgRating}
+              </p>
+              <p className="caption3 text-grey5 flex items-center">
+                {packageItem.ratingCount}명 평가
+              </p>
+            </div>
+          )}
         </div>
-        <div className="flex items-center gap-1">
-          <span className="body4 text-grey6">★</span>
-          <span className="body4 text-grey6">{packageItem.avgRating}</span>
-          <span className="body4 text-grey5">({packageItem.ratingCount})</span>
-        </div>
-        <p className="body4 text-grey6 truncate">{packageItem.address}</p>
-        {packageItem.prices && packageItem.prices.length > 0 && (
-          <p className="title3 text-grey8">
-            {Math.min(
-              ...(packageItem.prices as any[]).map((obj: any) => obj.price)
-            ).toLocaleString()}
-            원부터
+        <div className="flex flex-col gap-1">
+          <p className="headline2 text-grey7">
+            {Number(packageItem.price).toLocaleString()}원 ~
           </p>
-        )}
+          <p className="body4 text-grey4">
+            <span className="body4 text-grey4">
+              {packageArrayMapEngToKor[packageItem.category]}
+            </span>
+          </p>
+        </div>
       </div>
     </Link>
   );

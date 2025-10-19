@@ -62,7 +62,8 @@ export interface Package {
   ratingSum: number;
   ratingCount: number;
   avgRating: number;
-  prices: object[];
+  // prices: object[];
+  price: number;
   phoneNumber: string;
   snsLink: string;
   businessHours: string;

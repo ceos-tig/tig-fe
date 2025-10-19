@@ -1,17 +1,5 @@
-'use client';
 import { Suspense } from 'react';
-import Tabs from '@components/all/Tabs/Tabs';
-import { mainArray } from '@constant/constant';
-import SearchHeader from '@components/all/SearchHeader';
-import HomeCardList from '@components/home/HomeCardList';
-import PackageCardList from '@components/home/PackageCardList';
-import useGeolocation from '@hooks/home/useGeoLocation';
-import usePackageLocation from '@hooks/home/usePackageLocation';
-import Footer from '@components/all/Footer/Footer';
-import { useScroll } from '@hooks/useScroll';
-import useTab from '@store/tabNumberStore';
-import SportsUIList from './SportsUIList';
-import PackageUIList from './PackageUIList';
+import HomeContentClient from './HomeContentClient';
 
 const UIListSkeleton = () => {
   return (
@@ -43,45 +31,39 @@ export default function HomeContent({
   isLogin: boolean;
   children: React.ReactNode;
 }) {
-  const MAINARRAY = mainArray;
-  const { clubCards, recommendClubCards } = useGeolocation(isLogin);
-  const { packageCards, recommendPackageCards } = usePackageLocation(isLogin);
-  const { isVisible } = useScroll();
-  const currentTab = useTab((state) => state.selectedTab);
-
   return (
-    <>
-      <SearchHeader isHomeOrResultPage className="sticky" />
-      <Tabs
-        tabArray={MAINARRAY}
-        from="home"
-        className={`stickytransition-transform duration-300 ease-in-out z-[9] top-[58px] ${
-          isVisible ? 'translate-y-0' : '-translate-y-300'
-        }`}
-      />
-      {children}
-      <Suspense fallback={<UIListSkeleton />}>
-        {currentTab === '스포츠' && <SportsUIList />}
-        {currentTab === '패키지' && <PackageUIList />}
-      </Suspense>
-      {currentTab === '스포츠' && (
-        <>
-          <HomeCardList
-            title="근처에서 즐길 수 있는 스포츠예요"
-            Card={clubCards}
-          />
-          <HomeCardList title="이런 스포츠 어때요?" Card={recommendClubCards} />
-        </>
-      )}
-      {currentTab === '패키지' && (
-        <>
-          <PackageCardList
-            title="추천하는 서비스에요"
-            Card={recommendPackageCards}
-          />
-        </>
-      )}
-      <Footer />
-    </>
+    <Suspense
+      fallback={
+        <div className="w-full min-h-screen flex flex-col bg-white">
+          {/* 헤더 자리 확보 + 탭 스켈레톤 */}
+          <div className="w-full h-[52px] border-b border-grey2 bg-white flex items-center px-4">
+            <div className="h-[32px] w-[64px] bg-gray-200 rounded animate-pulse" />
+          </div>
+          {/* UI 리스트 스켈레톤 */}
+          <UIListSkeleton />
+          {/* 카드 리스트 스켈레톤 */}
+          <div className="flex flex-col gap-10 mt-4">
+            <div className="ml-5 h-[24px] w-[200px] bg-gray-200 rounded animate-pulse" />
+            <div className="flex gap-[10px] overflow-x-scroll pr-[20px] ml-5">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="w-[152px] flex flex-col gap-[6px] shrink-0"
+                >
+                  <div className="w-[152px] h-[152px] rounded-[10px] bg-gray-200 animate-pulse" />
+                  <div className="flex gap-[6px] mt-[6px]">
+                    <div className="h-[18px] bg-gray-200 rounded w-2/3 animate-pulse" />
+                    <div className="h-[18px] bg-gray-200 rounded w-[40px] shrink-0 animate-pulse" />
+                  </div>
+                  <div className="h-[16px] bg-gray-200 rounded w-[80px] animate-pulse" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <HomeContentClient isLogin={isLogin}>{children}</HomeContentClient>
+    </Suspense>
   );
 }
