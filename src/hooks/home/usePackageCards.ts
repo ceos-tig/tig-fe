@@ -19,14 +19,14 @@ export const usePackageCards = (isLogin: boolean) => {
     } else if (selectedOption === '고가순') {
       sortedCards.sort(
         (a, b) =>
-          Math.max(...(b.prices as any[]).map((obj) => obj.price)) -
-          Math.max(...(a.prices as any[]).map((obj) => obj.price))
+          Math.max(b.price) -
+          Math.max(a.price)
       );
     } else if (selectedOption === '저가순') {
       sortedCards.sort(
         (a, b) =>
-          Math.min(...(a.prices as any[]).map((obj) => obj.price)) -
-          Math.min(...(b.prices as any[]).map((obj) => obj.price))
+          Math.min(a.price) -
+          Math.min(b.price)
       );
     } else if (selectedOption === '리뷰많은순') {
       sortedCards.sort((a, b) => b.ratingCount - a.ratingCount);
